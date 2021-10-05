@@ -4,20 +4,32 @@
 
 // var AWS = require('aws-sdk/dist/aws-sdk-react-native');
 import { DynamoDB } from "aws-sdk";
+import fetch from "node-fetch";
+
 import {stringifiedJson} from "aws-sdk/clients/customerprofiles";
 
 class DynamoInteractor {
     private static instance: DynamoInteractor;
     private dynamo: DynamoDB;
 
+
+
     /**
      * TODO Remove API Key
      * @private
      */
     private constructor() {
+
+        // Retrieve API Key
+        let response = await fetch('https://xqdbq3fjta.execute-api.us-west-2.amazonaws.com/prod/auth');
+        let body = await response.text();
+
+        console.log(body);
+
+        // Initialize Dynamo DB Connector
         this.dynamo = new DynamoDB({
-            accessKeyId: ,
-            secretAccessKey: ,
+            accessKeyId: body.AccessKeyId,
+            secretAccessKey: body.SecretAccessKey,
             region: 'us-west-2'
         });
     }
