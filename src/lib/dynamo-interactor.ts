@@ -7,11 +7,12 @@ import { DynamoDB } from "aws-sdk";
 import fetch from "node-fetch";
 
 import {stringifiedJson} from "aws-sdk/clients/customerprofiles";
+import {Duplex} from "stream";
 
 class DynamoInteractor {
     private static instance: DynamoInteractor;
     private dynamo: DynamoDB;
-
+    private static instanceIsReady: boolean;
 
 
     /**
@@ -19,22 +20,31 @@ class DynamoInteractor {
      * @private
      */
     private constructor() {
+        // Does nothing but ensure a value is assigned.
+        this.dynamo = new DynamoDB();
+    }
 
+    private static async setCredentials()
+    {
         // Retrieve API Key
         let response = await fetch('https://xqdbq3fjta.execute-api.us-west-2.amazonaws.com/prod/auth');
         let body = await response.text();
 
         console.log(body);
 
+        DynamoInteractor.instance.setDynamoClient('fakeaccesskey', 'fakeaccesskey');
+        DynamoInteractor.instanceIsReady = true;
+    }
+
+    private setDynamoClient(accessKeyId: string, secretAccessKey: string)
+    {
         // Initialize Dynamo DB Connector
         this.dynamo = new DynamoDB({
-            accessKeyId: body.AccessKeyId,
-            secretAccessKey: body.SecretAccessKey,
+            accessKeyId: accessKeyId,
+            secretAccessKey: secretAccessKey,
             region: 'us-west-2'
         });
     }
-
-
 
     /**
      * The magic of Singleton pattern happens here.
@@ -42,10 +52,25 @@ class DynamoInteractor {
      * If not it will create the instance and assign it
      */
     public static getInstance(): DynamoInteractor {
+        // Check if the instance has been initialized yet
         if (!DynamoInteractor.instance) {
+
+            // Mark the instance as not ready.
+            DynamoInteractor.instanceIsReady = false;
+
+            // Call the constructor
             DynamoInteractor.instance = new DynamoInteractor();
+
+            // Async call to set credentials, Instance is not ready yet.
+            DynamoInteractor.setCredentials();
         }
 
+        // Wait until the instance is ready.
+        while (DynamoInteractor.instanceIsReady == false) {}
+
+        // TODO Implement wait during credential refresh.
+
+        // Return the instance.
         return DynamoInteractor.instance;
     }
 
