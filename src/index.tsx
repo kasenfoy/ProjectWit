@@ -29,19 +29,19 @@ const task = new Tasks({
     description: 'This is my first task!'
 });
 
-task.create();
-Tasks.get(task.data.id)
+task.create().then(() => {console.log("Done waiting after task.create call")});
+// Tasks.get(task.data.id)
 
 // task.id = 'bob';
 // tag.greet();
 // task.greet();
-DynamoInteractor.getInstance().InsertTask()
-
-const a = new A();
-const b = new B();
-
-a.get();
-b.get();
+// DynamoInteractor.getInstance().InsertTask()
+//
+// const a = new A();
+// const b = new B();
+//
+// a.get();
+// b.get();
 // mappers.TagMapper.get(tag);
 // mappers.TaskMapper.get(task);
 

@@ -15,18 +15,18 @@ class Tasks extends WitObject {
         this.data = params;
     }
 
-    create()
+    async create()
     {
-        TaskMapper.create(this);
+        await TaskMapper.create(this);
     }
 
-    static get(id: string|undefined): Tasks {
-        // LEFT OFF Dunno, somewhere around here
-        const iTask = TaskMapper.get(new Tasks({id: id}));
-        const task = new Tasks(iTask);
-        console.log("Retrieved task with id:" + task.data);
-        return task;
-    }
+    // static get(id: string|undefined): Tasks {
+    //     // LEFT OFF Dunno, somewhere around here
+    //     const iTask = TaskMapper.get(new Tasks({id: id}));
+    //     const task = new Tasks(iTask);
+    //     console.log("Retrieved task with id:" + task.data);
+    //     return task;
+    // }
 
     greet(): void
     {

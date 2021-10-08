@@ -4,10 +4,12 @@
 
 // var AWS = require('aws-sdk/dist/aws-sdk-react-native');
 import { DynamoDB } from "aws-sdk";
-import fetch from "node-fetch";
+import axios from 'axios';
+// import fetch from "node-fetch";
 
 import {stringifiedJson} from "aws-sdk/clients/customerprofiles";
 import {Duplex} from "stream";
+
 
 class DynamoInteractor {
     private static instance: DynamoInteractor;
@@ -21,23 +23,32 @@ class DynamoInteractor {
      */
     private constructor() {
         // Does nothing but ensure a value is assigned.
-        this.dynamo = new DynamoDB();
+        this.dynamo = new DynamoDB({region: 'us-west-2'});
     }
 
     private static async setCredentials()
     {
+        console.log("set credentials has been called");
+
+        // const Http = new request
         // Retrieve API Key
-        let response = await fetch('https://xqdbq3fjta.execute-api.us-west-2.amazonaws.com/prod/auth');
-        let body = await response.text();
+        await axios.get('https://xqdbq3fjta.execute-api.us-west-2.amazonaws.com/prod/auth')
+            .then(data=> {
+                console.log(data);
+                console.log(data.data['SecretAccessKey'])
+                DynamoInteractor.instance.setDynamoClient(data.data['AccessKeyId'], data.data['SecretAccessKey']);
+                DynamoInteractor.instanceIsReady = true;
+            })
+        // let body = await response.text();
+        // DynamoInteractor.instanceIsReady = true;
 
-        console.log(body);
 
-        DynamoInteractor.instance.setDynamoClient('fakeaccesskey', 'fakeaccesskey');
-        DynamoInteractor.instanceIsReady = true;
     }
 
     private setDynamoClient(accessKeyId: string, secretAccessKey: string)
     {
+        console.log("Access Key ID" + accessKeyId)
+        console.log("Secret Access Key" + secretAccessKey)
         // Initialize Dynamo DB Connector
         this.dynamo = new DynamoDB({
             accessKeyId: accessKeyId,
@@ -51,7 +62,9 @@ class DynamoInteractor {
      * This will return the instance if it has been created
      * If not it will create the instance and assign it
      */
-    public static getInstance(): DynamoInteractor {
+    public static async getInstance(): Promise<DynamoInteractor> {
+        console.log("Calling get Instance");
+
         // Check if the instance has been initialized yet
         if (!DynamoInteractor.instance) {
 
@@ -62,12 +75,14 @@ class DynamoInteractor {
             DynamoInteractor.instance = new DynamoInteractor();
 
             // Async call to set credentials, Instance is not ready yet.
-            DynamoInteractor.setCredentials();
+            console.log("Calling set credentials");
+            await DynamoInteractor.setCredentials();
         }
 
         // Wait until the instance is ready.
-        while (DynamoInteractor.instanceIsReady == false) {}
+        console.log("Waiting until instance is ready");
 
+        console.log("Instance is supposedly ready")
         // TODO Implement wait during credential refresh.
 
         // Return the instance.
@@ -75,7 +90,7 @@ class DynamoInteractor {
     }
 
     public get(key: string|undefined, table: string): any {
-
+        // while (DynamoInteractor.instanceIsReady) {}
         // Set up the parameters
         const params = {
             TableName: table,
@@ -100,7 +115,7 @@ class DynamoInteractor {
         });
     }
 
-    insert(params: any) {
+    public async insert(params: any) {
         console.log(params)
 
         this.dynamo.putItem(params, function (err, data) {
