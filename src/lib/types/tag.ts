@@ -10,6 +10,16 @@ class Tag extends Types.WitObject {
     //     // super(name);
     // }
 
+    // TODO Implement
+    delete(): Promise<undefined> {
+        return Promise.resolve(undefined);
+    }
+
+    // TODO Implement
+    get(): Promise<Tag> {
+        return Promise.resolve(new Tag({id: 'fakeid'}));
+    }
+
     greet(): void
     {
         console.log("Hello from Tags!");

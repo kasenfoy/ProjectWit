@@ -3,26 +3,48 @@ import { DynamoInteractor } from "../dynamo-interactor";
 import * as mappers from "../data_mappers/index"
 
 export interface IWitObject {
-    id?: string,
+    id: string,
     name?: string,
+    last_updated_utc?: Date;
+    created_utc?: Date;
 }
+
+// export interface iExistingWithObject extends IWitObject{
+//     id: string
+// }
+
 
 abstract class WitObject {
     data: IWitObject;
     // name: string;
     // id: string;
-    abstract tableName: string;
+    static tableName: string;
 
-    constructor(params: IWitObject) {
+    constructor(params: IWitObject ) {
         if (params === undefined)
-            params = {}
+            params = {id: uuidv4()}
 
-        // Set the id
-        if (params.id === undefined || params.id === '')
-            params.id = uuidv4();
 
         // Set the data
         this.data = params;
+
+        // Set the id
+        if (this.data.id === undefined || this.data.id === '')
+            this.data.id = uuidv4();
+
+        // Set the Created/Updated
+        if(this.data.created_utc === undefined)
+        {
+            this.data.created_utc = new Date();
+            this.data.last_updated_utc = new Date();
+        }
+
+
+
+
+        // Bindings
+        this.get = this.get.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     greet(): void
@@ -31,11 +53,12 @@ abstract class WitObject {
         // console.log(mappers.TagMapper.create())
     }
 
-    // get(obj: WitObject)
-    // {
-    //     // console.log(obj.tableName);
-    //     console.log(obj.tableName)
-    // }
+    abstract delete(): Promise<undefined>;
+    abstract get(): Promise<WitObject>;
+    static generateId(): string
+    {
+        return uuidv4();
+    }
 
     retrieveFromDataStore()
     {
