@@ -15,6 +15,11 @@ import { A, B } from "./lib/deleteme"
 import {DynamoInteractor} from "./lib/dynamo-interactor";
 import {TileList} from "./components/tile-list";
 import {iScanOutput} from "./lib/interfaces/dynamodb/iScanOutput";
+import {Id} from "./components/basic/id";
+import {DescribeComponent} from "./components/describe-component";
+
+/*** CSS ***/
+import "./styles.css"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -61,7 +66,10 @@ let task = Tasks.create({
 Tasks.scan().then((data: Tasks[])=>{
     console.log('Where is the scan data?', data)
     ReactDOM.render(
-        <TileList data={data} refreshFunction={Tasks.scan}/>,
+        <div>
+        <DescribeComponent message={"Is this a describe component?"}/>
+        <TileList data={data} refreshFunction={Tasks.scan}/>
+        </div>,
         document.getElementById('root')
     )
     // TODO Task setup here
