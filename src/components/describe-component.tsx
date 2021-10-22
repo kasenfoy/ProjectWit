@@ -1,26 +1,26 @@
 import React from "react";
-
+import DescribeComponentCss from './css/describe-component.module.css'
 // Make the props a list of form item components to include (ID, Name, Description, etc)
-interface IdProps {
+interface DescribeComponentProps {
     message: string
 }
 
-interface IdState {
+interface DescribeComponentState {
 
 }
 
-class Id extends React.Component<IdProps,IdState> {
+class DescribeComponent extends React.Component<DescribeComponentProps,DescribeComponentState> {
 
     message: string;
 
-    constructor(props: IdProps) {
+    constructor(props: DescribeComponentProps) {
         super(props);
         this.message = props.message
     }
 
     render() {
         let html =
-            <div><p>{this.message}</p></div>
+            <div className={DescribeComponentCss.DescribeComponentDiv}><p>{this.message}</p></div>
             // TODO Left off here, thought process is that this should create a pop-up on hover to describe a component.
         return html;
 
@@ -28,4 +28,4 @@ class Id extends React.Component<IdProps,IdState> {
 
 }
 
-export {Id}
+export {DescribeComponent}
