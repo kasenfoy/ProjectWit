@@ -26,7 +26,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
 // const tag = new Tag("bob");
 // tag.id = 'bob';
 let task = Tasks.create({

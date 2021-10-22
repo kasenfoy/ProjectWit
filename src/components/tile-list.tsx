@@ -2,6 +2,8 @@ import React from "react";
 import {IScanOutput} from "../lib/interfaces/dynamodb/IScanOutput";
 import {WitObject} from "../lib/types";
 import {Id} from "./basic/id"
+import {Tile} from "./tile";
+import TileListCss from "./css/tile-list.module.css"
 
 interface TileListState {
     compiledList?: JSX.Element[] | undefined;
@@ -56,11 +58,7 @@ class TileList extends React.Component<TileListProps,TileListState> {
         // Create each <li> element and add it to array
         let compiledList = list.map((item: WitObject) => {
             console.log(typeof item)
-            let html = <li
-                key={item.data.id}>Name: {item.data.name} <Id id={item.data.id} />
-                <button onClick={item.delete}>Delete</button>
-            </li>
-
+            let html = <Tile obj={item} />
             return html
             }
         );
@@ -108,8 +106,8 @@ class TileList extends React.Component<TileListProps,TileListState> {
      * React render to put the elements in the DOM
      */
     render() {
-        let ul = <ul>{this.state.compiledList}</ul>
-        return <div>{ul}</div>;
+        // let ul = <ul>{this.state.compiledList}</ul>
+        return <div className={TileListCss.TileList}>{this.state.compiledList}</div>;
     }
 }
 

@@ -1,0 +1,10 @@
+.Tile {
+    border-style: outset;
+    /*border-color: red;*/
+    /*border-width: 10px;*/
+    margin-bottom: 5px;
+
+}
+.Tile:hover {
+    background-color: blue;
+}
