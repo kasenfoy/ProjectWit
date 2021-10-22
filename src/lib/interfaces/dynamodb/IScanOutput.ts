@@ -1,8 +1,8 @@
 import {WitObject} from "../../types";
 
-interface iScanOutput {
+interface IScanOutput {
     Count: number,
     Items: [WitObject]
 }
 
-export type {iScanOutput}
+export type {IScanOutput}

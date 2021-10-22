@@ -1,13 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { DynamoInteractor } from "../dynamo-interactor";
 import * as mappers from "../data_mappers/index"
+import * as Interfaces from "../interfaces"
 
-export interface IWitObject {
-    id: string,
-    name?: string,
-    last_updated_utc?: Date;
-    created_utc?: Date;
-}
+
 
 // export interface iExistingWithObject extends IWitObject{
 //     id: string
@@ -15,12 +11,12 @@ export interface IWitObject {
 
 
 abstract class WitObject {
-    data: IWitObject;
+    data: Interfaces.ITypes.IWitObject;
     // name: string;
     // id: string;
     static tableName: string;
 
-    constructor(params: IWitObject ) {
+    constructor(params: Interfaces.ITypes.IWitObject ) {
         if (params === undefined)
             params = {id: uuidv4()}
 

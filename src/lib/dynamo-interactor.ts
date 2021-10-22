@@ -10,8 +10,8 @@ import axios from 'axios';
 import {stringifiedJson} from "aws-sdk/clients/customerprofiles";
 import {Duplex} from "stream";
 import {DocumentClient} from "aws-sdk/clients/dynamodb";
-import {iScanOutput} from "./interfaces/dynamodb/iScanOutput";
-import {iPutItemOutput} from "./interfaces/dynamodb/iPutItemOutput";
+import {IScanOutput} from "./interfaces/dynamodb/IScanOutput";
+import {IPutItemOutput} from "./interfaces/dynamodb/IPutItemOutput";
 
 interface CredentialData {
     accessKeyId: string,
@@ -180,7 +180,7 @@ class DynamoInteractor {
 
     }
 
-    public async scan(params: object): Promise<iScanOutput>
+    public async scan(params: object): Promise<IScanOutput>
     {
         console.log("scan() has been called with params:", params)
         let client = await DynamoInteractor.getInstance();
@@ -193,7 +193,7 @@ class DynamoInteractor {
             await data;
 
             console.debug("scan() has returned data: ", data)
-            return {Count: data.Count, Items: data.Items} as iScanOutput
+            return {Count: data.Count, Items: data.Items} as IScanOutput
         }
         catch (err) {
             console.error("scan() error: ", err)

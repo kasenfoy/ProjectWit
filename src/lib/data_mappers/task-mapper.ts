@@ -1,8 +1,8 @@
 import { DataMapper } from "./data-mapper";
 import {Tasks, WitObject} from "../types";
-import {ITasks} from "../types";
 import {DynamoInteractor} from "../dynamo-interactor";
-import {iScanOutput} from "../interfaces/dynamodb/iScanOutput";
+import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
+import * as Interfaces from "../interfaces"
 
 class TaskMapper extends DataMapper
 {
@@ -126,7 +126,7 @@ class TaskMapper extends DataMapper
     // }
 
     static fromDynamoFormat(obj: object): Tasks {
-        const iTask = <ITasks>obj;
+        const iTask = <Interfaces.ITypes.ITasks>obj;
         return new Tasks(iTask);
     }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {iScanOutput} from "../lib/interfaces/dynamodb/iScanOutput";
+import {IScanOutput} from "../lib/interfaces/dynamodb/IScanOutput";
 import {WitObject} from "../lib/types";
 import {Id} from "./basic/id"
 

@@ -1,10 +1,9 @@
-import {WitObject, IWitObject} from "./wit-object";
+import {WitObject} from "./wit-object";
 import {TaskMapper} from "../data_mappers";
-import {iScanOutput} from "../interfaces/dynamodb/iScanOutput";
+import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
+import * as Interfaces from "../interfaces/";
 
-export interface ITasks extends IWitObject {
-    description?: string;
-}
+
 
 // export interface ITasksNew extends ITasks {
 //     id?: string;
@@ -13,15 +12,15 @@ export interface ITasks extends IWitObject {
 class Tasks extends WitObject {
 
     static tableName: string = "tasks";
-    data: ITasks;
+    data: Interfaces.ITypes.ITasks;
 
-    constructor(params: ITasks) {
+    constructor(params: Interfaces.ITypes.ITasks) {
         super(params);
         this.data = params;
     }
 
     // TODO Refactor, this should be static
-    static async create(params: ITasks): Promise<Tasks>
+    static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
     {
         // Call the constructor, this maps from static to constructor
         // it enables us de-serializing the Task from the data source by directly calling the constructor.

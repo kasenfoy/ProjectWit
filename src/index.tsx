@@ -14,7 +14,7 @@ import {TaskBlock} from "./components/task-block";
 import { A, B } from "./lib/deleteme"
 import {DynamoInteractor} from "./lib/dynamo-interactor";
 import {TileList} from "./components/tile-list";
-import {iScanOutput} from "./lib/interfaces/dynamodb/iScanOutput";
+import {IScanOutput} from "./lib/interfaces/dynamodb/IScanOutput";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,7 +1,7 @@
 import {WitObject} from "../../types";
 
-interface iPutItemOutput {
+interface IPutItemOutput {
     id: string
 }
 
-export type {iPutItemOutput}
+export type {IPutItemOutput}

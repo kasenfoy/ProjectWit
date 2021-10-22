@@ -7,18 +7,6 @@ import { DynamoInteractor } from "../dynamo-interactor";
 
 
 class DataMapper
-{
-    // // static tableName: string;
-    // static get(obj: WitObject): void{
-    //     DynamoInteractor.getInstance().get(obj.id, obj.tableName);
-    //     return;
-    // }
-    // get(): {}
-    // save(): {}
-    // update(): {}
-    // get(id: string, tableName: string) {
-    //
-    // }
-}
+{}
 
 export { DataMapper }
