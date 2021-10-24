@@ -7,6 +7,18 @@ import * as Interfaces from "../interfaces"
 class TaskMapper extends DataMapper
 {
 
+    constructor() {
+        super()
+        this.create = TaskMapper.create;
+    }
+
+    // Function definitions - mapping to static
+    async create(task: Tasks): Promise<Tasks>
+    {
+        throw ""
+    };
+
+
     // static create(task: Tasks): Tasks {
     static async create(task: Tasks): Promise<Tasks> {
         console.debug("create() has been called with task: ", task)
@@ -55,6 +67,26 @@ class TaskMapper extends DataMapper
             throw "Id not set on Task"
         }
         return await TaskMapper.getById(task.data.id);
+    }
+
+    static async update(task: Tasks): Promise<Tasks>{
+        console.debug("update() has been called with task: ", task)
+        var params = {
+            Item: TaskMapper.toDynamoDocumentClientFormat(task),
+            ReturnConsumedCapacity: "TOTAL",
+            ReturnValues: "ALL_OLD",
+            // TODO There should be an 'exists' param here
+            TableName: Tasks.tableName
+        }
+
+        let client = await DynamoInteractor.getInstance();
+
+        // This will be undefined, we just want to wait until it is done
+        let data = await client.insert(params);
+        await data
+
+        // Unfortunately with Dynamo we have to call a 'get()' on the ID right after inserting
+        return TaskMapper.fromDynamoFormat(await Tasks.get(task.data.id));
     }
 
     // Retrieve an item by it's id.
@@ -148,6 +180,7 @@ class TaskMapper extends DataMapper
         return data;
     }
 
+    // TODO Swap this to IWitObjectTask instead of Object?
     static toDynamoDocumentClientFormat(task: Tasks): Object {
         let data = {
             "id": task.data.id,

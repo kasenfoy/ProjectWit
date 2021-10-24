@@ -15,28 +15,56 @@ import { A, B } from "./lib/deleteme"
 import {DynamoInteractor} from "./lib/dynamo-interactor";
 import {TileList} from "./components/tile-list";
 import {DescribeComponent} from "./components/describe-component";
+import {CreateFormBase} from "./components/create-form";
+import {PrimaryLayout} from "./components/primary-layout";
+
 
 /*** CSS ***/
 import "./styles.css"
+import {CreateFormTasks} from "./components/create-form-tasks";
+
+
+
+
+// Default react stuff
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    <PrimaryLayout />,
+    document.getElementById('root')
+)
+
+// ReactDOM.render(
+//     <div id={'main-content'}>
+//
+//     </div>,
+//     document.getElementById('root')
+// );
+
+ReactDOM.render(
+    <CreateFormTasks />,
+    document.getElementById('forms')
+)
+
+
 
 // const tag = new Tag("bob");
 // tag.id = 'bob';
-let task = Tasks.create({
-    id: WitObject.generateId(),
-    name: 'A',
-    description: 'B!'
-}).then((task: Tasks)=>{
-    Tasks.get(task.data.id).then((task: Tasks)=> {
-        // console.log(task.data.name)
-    })
-});
+/** Sample Creation Logic ***/
+// let task = Tasks.create({
+//     id: WitObject.generateId(),
+//     name: 'A',
+//     description: 'B!'
+// }).then((task: Tasks)=>{
+//     Tasks.get(task.data.id).then((task: Tasks)=> {
+//         // console.log(task.data.name)
+//     })
+// });
 
 // task.create().then((task: Tasks) => {
 //     console.log("Done waiting after task.create call")
@@ -67,8 +95,12 @@ Tasks.scan().then((data: Tasks[])=>{
         <DescribeComponent message={"Is this a describe component?"}/>
         <TileList data={data} refreshFunction={Tasks.scan}/>
         </div>,
-        document.getElementById('root')
+        document.getElementById('lists')
     )
+
+    // Mock update
+    data[0].data.name = new Date().toISOString();
+    data[0].update();
     // TODO Task setup here
 });
 

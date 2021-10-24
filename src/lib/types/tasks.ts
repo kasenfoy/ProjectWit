@@ -39,6 +39,12 @@ class Tasks extends WitObject {
         return await TaskMapper.get(this)
     }
 
+    async update(): Promise<Tasks>
+    {
+        console.log("Calling non-static get from Tasks");
+        return await TaskMapper.update(this)
+    }
+
     async delete(): Promise<undefined>
     {
         console.debug("delete() on task: ", this);
@@ -62,6 +68,8 @@ class Tasks extends WitObject {
         console.log("scan() has been called in tasks.ts");
         return await TaskMapper.scan();
     }
+
+
 
     // static get(id: string|undefined): Tasks {
     //     // LEFT OFF Dunno, somewhere around here
