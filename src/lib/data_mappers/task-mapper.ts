@@ -3,27 +3,21 @@ import {Tasks, WitObject} from "../types";
 import {DynamoInteractor} from "../dynamo-interactor";
 import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
 import * as Interfaces from "../interfaces"
+import {ITasks} from "../interfaces/types";
 
 class TaskMapper extends DataMapper
 {
 
     constructor() {
         super()
-        this.create = TaskMapper.create;
     }
-
-    // Function definitions - mapping to static
-    async create(task: Tasks): Promise<Tasks>
-    {
-        throw ""
-    };
 
 
     // static create(task: Tasks): Tasks {
     static async create(task: Tasks): Promise<Tasks> {
         console.debug("create() has been called with task: ", task)
         var params = {
-            Item: TaskMapper.toDynamoDocumentClientFormat(task),
+            Item: this.toDynamoDocumentClientFormat<ITasks>(task),
             ReturnConsumedCapacity: "TOTAL",
             ReturnValues: "ALL_OLD",
             Expected: {
@@ -31,7 +25,6 @@ class TaskMapper extends DataMapper
             },
             TableName: Tasks.tableName
         }
-
         let client = await DynamoInteractor.getInstance();
 
         // This will be undefined, we just want to wait until it is done
@@ -39,46 +32,32 @@ class TaskMapper extends DataMapper
         await data
 
         // Unfortunately with Dynamo we have to call a 'get()' on the ID right after inserting
-        return TaskMapper.fromDynamoFormat(await Tasks.get(task.data.id));
-
-
-        // DynamoInteractor.getInstance().then((i: DynamoInteractor) => {
-        //     i.insert(params)
-        // })
-        // DynamoInteractor.getInstance().insert(params);
-        // return DynamoInteractor.getInstance()
-        //     .then((di: DynamoInteractor ) => {
-        //         di.insert(params);
-        //     })
-        //     .then(()=>{
-        //         return Promise.resolve(task);
-        //     });
-        // let instance = await DynamoInteractor.getInstance()
-        // instance.insert(params);
-        // return task;
-        // return task;
-        // insert(params);
-        // return task;
+        return new Tasks(this.fromDynamoFormat<ITasks>(await this.get(task)));
     }
 
     // Function routes from a Task to get task by id.
     static async get(task: Tasks): Promise<Tasks>{
+        // Ensure that an ID is set.
         if (task.data.id === undefined){
             throw "Id not set on Task"
         }
-        return await TaskMapper.getById(task.data.id);
+
+        // Retrieve and return the data.
+        return await this.getById(task.data.id);
     }
+
 
     static async update(task: Tasks): Promise<Tasks>{
         console.debug("update() has been called with task: ", task)
         var params = {
-            Item: TaskMapper.toDynamoDocumentClientFormat(task),
+            Item: this.toDynamoDocumentClientFormat<ITasks>(task),
             ReturnConsumedCapacity: "TOTAL",
             ReturnValues: "ALL_OLD",
             // TODO There should be an 'exists' param here
             TableName: Tasks.tableName
         }
 
+        // Retrieve the Dynamo Client
         let client = await DynamoInteractor.getInstance();
 
         // This will be undefined, we just want to wait until it is done
@@ -86,26 +65,32 @@ class TaskMapper extends DataMapper
         await data
 
         // Unfortunately with Dynamo we have to call a 'get()' on the ID right after inserting
-        return TaskMapper.fromDynamoFormat(await Tasks.get(task.data.id));
+        return new Tasks(this.fromDynamoFormat<ITasks>(await this.get(task)));
     }
 
-    // Retrieve an item by it's id.
+    // Retrieve an item by its id.
     static async getById(id: string): Promise<Tasks> {
         console.debug("Called getById");
 
+        // Retrieve the client
         let client = await DynamoInteractor.getInstance();
+
+        // Call a get on Dynamo with the key and table
         let data = await client.get({
             TableName: Tasks.tableName,
             Key: {'id': id}
         })
-        console.debug("Data", data)
-        return TaskMapper.fromDynamoFormat(data);
+
+        console.debug("Data from get() call", data)
+        return new Tasks(this.fromDynamoFormat<ITasks>(data));
     }
+
 
     static async delete(task: Tasks): Promise<undefined>
     {
-        return await TaskMapper.deleteById(task.data.id);
+        return await this.deleteById(task.data.id);
     }
+
 
     static async deleteById(id: string): Promise<undefined>
     {
@@ -121,75 +106,16 @@ class TaskMapper extends DataMapper
     }
 
 
+    // TODO Implement search
     static async scan(): Promise<Tasks[]> {
         console.debug("scan() has been called from task-mapper")
         let client = await DynamoInteractor.getInstance();
 
         let data = await client.scan({"TableName": Tasks.tableName})
-        let transformedData = data.Items.map((item: WitObject ) => { return TaskMapper.fromDynamoFormat(item) })
+        let transformedData = data.Items.map((item: WitObject ) => { return new Tasks(this.fromDynamoFormat<ITasks>(item)) })
         return await transformedData
     }
 
-
-    // create(tag: Tag): void {
-    //
-    //     console.log('Creating tag')
-    // }
-    // update(): {} {
-    //     console.log('Updating tag')
-    //     return {};
-    // }
-
-    // static get(task: Tasks): ITasks {
-    //     console.log(task)
-    //     console.log(task.data)
-    //     const data = DynamoInteractor
-    //         .getInstance()
-    //         .get(task.data.id, task.tableName);
-    //     console.log('Getting task')
-    //     console.log(data)
-    //     return data;
-    // }
-
-
-    // static fromDynamoFormat(obj: any): ITasks {
-    //     const iTask = <ITasks>obj;
-    //     return iTask;
-    // }
-
-    static fromDynamoFormat(obj: object): Tasks {
-        const iTask = <Interfaces.ITypes.ITasks>obj;
-        return new Tasks(iTask);
-    }
-
-    // TODO Determine if this is needed after swap to DocumentClient
-    static toDynamoFormat(task: Tasks): Object {
-
-        let data = {
-            "id": {
-                S: task.data.id
-            },
-            "name": {
-                S: task.data.name
-            },
-            "description": {
-                S: task.data.description
-            }
-        }
-
-        return data;
-    }
-
-    // TODO Swap this to IWitObjectTask instead of Object?
-    static toDynamoDocumentClientFormat(task: Tasks): Object {
-        let data = {
-            "id": task.data.id,
-            "name": task.data.name,
-            "description": task.data.description
-        }
-
-        return data;
-    }
 }
 
 export {TaskMapper}
