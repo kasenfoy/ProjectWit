@@ -1,88 +1,54 @@
 import {WitObject} from "./wit-object";
 import {TaskMapper} from "../data_mappers";
-import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
 import * as Interfaces from "../interfaces/";
 
 
-
-// export interface ITasksNew extends ITasks {
-//     id?: string;
-// }
-
 class Tasks extends WitObject {
 
-    static tableName: string = "tasks";
     data: Interfaces.ITypes.ITasks;
+    mapper: TaskMapper;
+    static mapper: TaskMapper = new TaskMapper();
 
     constructor(params: Interfaces.ITypes.ITasks) {
         super(params);
         this.data = params;
-    }
-
-    // TODO Refactor, this should be static
-    static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
-    {
-        // Call the constructor, this maps from static to constructor
-        // it enables us de-serializing the Task from the data source by directly calling the constructor.
-        // Also ensure that id always exists on IWitObject
-        params.id = WitObject.generateId();
-        let task = new Tasks(params);
-
-        let data = await TaskMapper.create(task);
-        return data;
-        // return TaskMapper.toDynamoDocumentClientFormat(data)
+        this.mapper = new TaskMapper();
     }
 
     async get(): Promise<Tasks>
     {
-        console.log("Calling non-static get from Tasks");
-        return await TaskMapper.get(this)
+        return await this.mapper.get(this);
     }
 
     async update(): Promise<Tasks>
     {
-        console.log("Calling non-static get from Tasks");
-        return await TaskMapper.update(this)
+        return await this.mapper.update(this);
     }
 
-    async delete(): Promise<undefined>
+    async delete(): Promise<void>
     {
-        console.debug("delete() on task: ", this);
-        return await TaskMapper.delete(this);
+        return await this.mapper.delete(this);
+    }
+
+    static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
+    {
+        let task = new Tasks(params)
+        return await this.mapper.create(task);
     }
 
     static async get(id: string): Promise<Tasks>
     {
-        console.log("Calling static get from Tasks");
-        return await TaskMapper.getById(id);
+        return new Tasks((await this.mapper.getById(id)).data);
     }
 
     static async delete(id: string): Promise<undefined>
     {
-        console.debug("static delete() on task with id: ", id);
-        return await TaskMapper.deleteById(id);
+        return await this.mapper.deleteById(id);
     }
 
     static async scan(): Promise<Tasks[]>
     {
-        console.log("scan() has been called in tasks.ts");
-        return await TaskMapper.scan();
-    }
-
-
-
-    // static get(id: string|undefined): Tasks {
-    //     // LEFT OFF Dunno, somewhere around here
-    //     const iTask = TaskMapper.get(new Tasks({id: id}));
-    //     const task = new Tasks(iTask);
-    //     console.log("Retrieved task with id:" + task.data);
-    //     return task;
-    // }
-
-    greet(): void
-    {
-        console.log("Hello from Tasks!");
-        console.log()
+        return await this.mapper.scan();
     }
 }
 

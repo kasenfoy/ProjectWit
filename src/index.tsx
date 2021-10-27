@@ -39,12 +39,53 @@ ReactDOM.render(
     document.getElementById('root')
 )
 
+Tasks.get('SDEV435').then((task: Tasks) => {
+    console.log("Here is the task: ",task)
+    console.log("Trying to get that task again.")
+    task.get().then((task: Tasks) => {
+        console.log(task)
+    })
+})
+
+
+// Workflow testing
+Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {
+    console.debug("Task create() created: ", task)
+    task.get().then((task: Tasks)=>{
+        console.debug("Task get() retrieved: ", task)
+        task.data.name = "DELETEME More Stuff"
+        task.update().then((task: Tasks)=>{
+            console.debug("Task update() updated: ", task)
+            task.delete().then(()=>{
+                console.debug("Task delete() deleted, right?")
+            })
+        })
+    })
+})
+
+
+// Workflow testing Tag
+Tag.create({"id": "DELETEME"}).then((tag:Tag) => {
+    console.debug("Tag create() created: ", tag)
+    tag.get().then((tag: Tag)=>{
+        console.debug("Tag get() retrieved: ", tag)
+        tag.data.name = "DELETEME More Stuff"
+        tag.update().then((task: Tag)=>{
+            console.debug("Tag update() updated: ", tag)
+            tag.delete().then(()=>{
+                console.debug("Tag delete() deleted, right?")
+            })
+        })
+    })
+})
+
 // ReactDOM.render(
 //     <div id={'main-content'}>
 //
 //     </div>,
 //     document.getElementById('root')
 // );
+
 
 ReactDOM.render(
     <CreateFormTasks />,

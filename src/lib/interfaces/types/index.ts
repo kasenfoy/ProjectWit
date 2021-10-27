@@ -1,3 +1,4 @@
 import {IWitObject} from "./IWitObject"
 import {ITasks} from "./ITasks"
-export type {IWitObject, ITasks};
+import {ITags} from "./ITags"
+export type {IWitObject, ITasks, ITags};
