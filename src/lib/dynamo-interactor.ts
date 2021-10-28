@@ -9,9 +9,10 @@ import axios from 'axios';
 
 import {stringifiedJson} from "aws-sdk/clients/customerprofiles";
 import {Duplex} from "stream";
-import {DocumentClient} from "aws-sdk/clients/dynamodb";
+import {DocumentClient, ScanInput} from "aws-sdk/clients/dynamodb";
 import {IScanOutput} from "./interfaces/dynamodb/IScanOutput";
 import {IPutItemOutput} from "./interfaces/dynamodb/IPutItemOutput";
+import * as constants from "./constants"
 
 interface CredentialData {
     accessKeyId: string,
@@ -75,7 +76,7 @@ class DynamoInteractor {
     private static async retrieveCredentials(): Promise<CredentialData>
     {
         console.log('Calling API to retrieve credentials')
-        let data = await axios.get('https://xqdbq3fjta.execute-api.us-west-2.amazonaws.com/prod/auth')
+        let data = await axios.get(constants.config.authApiUrl)
         return {
             accessKeyId: data.data['AccessKeyId'],
             secretAccessKey: data.data['SecretAccessKey'],
@@ -180,15 +181,13 @@ class DynamoInteractor {
 
     }
 
-    public async scan(params: object): Promise<IScanOutput>
+    public async scan(params: ScanInput): Promise<IScanOutput>
     {
         console.log("scan() has been called with params:", params)
         let client = await DynamoInteractor.getInstance();
 
         try {
-            let data = await client.dynamoDocumentClient.scan({
-                "TableName": "tasks"
-            }).promise();
+            let data = await client.dynamoDocumentClient.scan(params).promise();
 
             await data;
 

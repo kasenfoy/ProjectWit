@@ -39,14 +39,6 @@ ReactDOM.render(
     document.getElementById('root')
 )
 
-Tasks.get('SDEV435').then((task: Tasks) => {
-    console.log("Here is the task: ",task)
-    console.log("Trying to get that task again.")
-    task.get().then((task: Tasks) => {
-        console.log(task)
-    })
-})
-
 
 // Workflow testing
 Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {

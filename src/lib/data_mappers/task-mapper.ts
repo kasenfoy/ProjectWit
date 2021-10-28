@@ -4,11 +4,12 @@ import {DynamoInteractor} from "../dynamo-interactor";
 import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
 import * as Interfaces from "../interfaces"
 import {ITasks} from "../interfaces/types";
+import * as constants from "../constants";
 
 class TaskMapper extends DataMapper<Tasks, ITasks>
 {
-    tableName: string = 'tasks';
-    static tableName: string = 'tasks'
+    tableName: string = constants.config.dynamoTables.tasks;
+    static tableName: string = constants.config.dynamoTables.tasks;
 
     constructor() {
         super()
