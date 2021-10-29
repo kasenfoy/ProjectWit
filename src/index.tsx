@@ -15,13 +15,13 @@ import { A, B } from "./lib/deleteme"
 import {DynamoInteractor} from "./lib/dynamo-interactor";
 import {TileList} from "./components/tile-list";
 import {DescribeComponent} from "./components/describe-component";
-import {CreateFormBase} from "./components/create-form";
+import {CreateFormBase} from "./components/forms/create-form";
 import {PrimaryLayout} from "./components/primary-layout";
 
 
 /*** CSS ***/
 import "./styles.css"
-import {CreateFormTasks} from "./components/create-form-tasks";
+import {CreateFormTasks} from "./components/forms/create-form-tasks";
 
 
 

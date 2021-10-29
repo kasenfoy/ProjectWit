@@ -19,8 +19,8 @@ abstract class WitObject {
         // Set the Created/Updated
         if(this.data.created_utc === undefined)
         {
-            this.data.created_utc = new Date();
-            this.data.last_updated_utc = new Date();
+            this.data.created_utc = new Date().toISOString();
+            this.data.last_updated_utc = new Date().toISOString();
         }
 
     }
