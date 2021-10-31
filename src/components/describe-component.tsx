@@ -9,6 +9,7 @@ interface DescribeComponentState {
 
 }
 
+// TODO Refactor this to make it work.
 class DescribeComponent extends React.Component<DescribeComponentProps,DescribeComponentState> {
 
     message: string;

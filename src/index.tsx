@@ -125,7 +125,6 @@ Tasks.scan().then((data: Tasks[])=>{
     console.log('Where is the scan data?', data)
     ReactDOM.render(
         <div>
-        <DescribeComponent message={"Is this a describe component?"}/>
         <TileList data={data} refreshFunction={Tasks.scan}/>
         </div>,
         document.getElementById('lists')

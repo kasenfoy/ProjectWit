@@ -28,9 +28,9 @@ class Id extends React.Component<IdProps,IdState> {
             <div
                 onMouseEnter={()=>this.setState({isShown: true})}
                 onMouseLeave={()=>this.setState({isShown: false})}>
-                {this.state.isShown && (
-                    <DescribeComponent message={"The id"}/>
-                )}
+                {/*{this.state.isShown && (*/}
+                {/*    <DescribeComponent message={"The id"}/>*/}
+                {/*)}*/}
                 <b>{this.id}</b>
             </div>
         return html;
