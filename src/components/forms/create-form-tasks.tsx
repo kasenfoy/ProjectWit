@@ -1,6 +1,6 @@
 import {CreateFormBase, CreateFormBaseProps, CreateFormBaseState} from "./create-form";
-import {Tasks, WitObject} from "../lib/types";
-import {ITasks} from "../lib/interfaces/types";
+import {Tasks, WitObject} from "../../lib/types";
+import {ITasks} from "../../lib/interfaces/types";
 
 
 // interface  {};
@@ -20,27 +20,25 @@ class CreateFormTasks extends CreateFormBase
         super(props)
 
         this.state = {
+            formName: 'Tasks',
             description: '',
             // This is a merge of objects as defined in:
             // https://devblogs.microsoft.com/typescript/announcing-typescript-2-1-2/
             ...super.getStateDefaults(props)
         }
 
-        console.log(this.state)
         this.compileComponents = this.compileComponents.bind(this);
     }
 
     compileComponents(): JSX.Element[] {
         let superHTML = super.compileComponents();
         let html =
-            <label>
+            <label key={'label-description'}>
                 <p>Description</p>
                 <textarea name={"description"} value={this.state.description} onChange={this.handleChange} />
             </label>
 
         let list = [superHTML, html]
-        // list.push(superHTML);
-        // list.push(html);
 
         return list as JSX.Element[];
     }

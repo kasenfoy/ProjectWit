@@ -1,6 +1,7 @@
 import React, {ChangeEventHandler, FormEventHandler} from "react";
-import {WitObject} from "../lib/types";
-import {IWitObject} from "../lib/interfaces/types";
+import {WitObject} from "../../lib/types";
+import {IWitObject} from "../../lib/interfaces/types";
+import CreateFormCss from "../css/create-form.module.css"
 
 
 // Make the props a list of form item components to include (ID, Name, Description, etc)
@@ -9,14 +10,12 @@ interface CreateFormBaseProps{
 }
 
 interface CreateFormBaseState extends IWitObject{
-    name: string
+    formName?: string
 }
 
 class CreateFormBase extends React.Component<CreateFormBaseProps,CreateFormBaseState> {
 
     state: CreateFormBaseState
-        // id: WitObject.generateId()
-
 
     constructor(props: CreateFormBaseProps) {
         super(props);
@@ -25,7 +24,7 @@ class CreateFormBase extends React.Component<CreateFormBaseProps,CreateFormBaseS
         // Get/Set default state. This is implemented here so subclasses
         // can retrieve the state values without them being overwritten
         this.getStateDefaults = this.getStateDefaults.bind(this);
-        this.getStateDefaults(props);
+        // this.getStateDefaults(props);
         this.state = this.getStateDefaults(props);
 
         console.log("this.state from constructor: ", this.state)
@@ -44,16 +43,18 @@ class CreateFormBase extends React.Component<CreateFormBaseProps,CreateFormBaseS
         if (props.fromEntry === undefined)
         {
             id = WitObject.generateId()
+            return {
+                id: id,
+            }
         }
         else
         {
-            id = props.fromEntry.id;
+            // id = props.fromEntry.id;
+            return {
+                ...props.fromEntry
+            }
         }
 
-        return {
-            id: id,
-            name: ''
-        }
     }
 
     handleChange(event: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>) {
@@ -86,20 +87,22 @@ class CreateFormBase extends React.Component<CreateFormBaseProps,CreateFormBaseS
     compileForm(components: JSX.Element[]): JSX.Element
     {
         let html =
-        <form onSubmit={this.handleSubmit}>
-            {/*{components.map((c)=>{c})}*/}
-            {components}
+            <div className={CreateFormCss.CreateForm}>
+                <h3><p>{this.state.formName}</p></h3>
+                <form onSubmit={this.handleSubmit}>
+                    {/*{components.map((c)=>{c})}*/}
+                    {components}
 
-            <input type="submit" value="Submit" />
-        </form>
-
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
         return html;
     }
 
     compileComponents(): JSX.Element[]
     {
         let html =
-        <label>
+        <label key={"name-label"}>
             <p>Name</p>
             <input name={"name"} value={this.state.name} onChange={this.handleChange}/>
         </label>
@@ -118,12 +121,6 @@ class CreateFormBase extends React.Component<CreateFormBaseProps,CreateFormBaseS
     }
 
     render() {
-        let html =
-            {/*<label>*/}
-            {/*    <p>Description</p>*/}
-            {/*    <textarea name={"description"} value={this.state.} onChange={this.handleChange} />*/}
-            {/*</label>*/}
-
         let components = this.compileComponents();
         let form = this.compileForm(components);
 

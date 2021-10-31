@@ -75,6 +75,10 @@ abstract class DataMapper<T extends WitObject, D extends IWitObject>
 
     async update(witObject: T): Promise<T>{
         console.debug("update() has been called with witObject: ", witObject)
+
+        // Update the last_updated_utc value
+        witObject.data.last_updated_utc = new Date().toISOString();
+
         var params = {
             Item: DataMapper.toDynamoDocumentClientFormat<D>(witObject),
             ReturnConsumedCapacity: "TOTAL",

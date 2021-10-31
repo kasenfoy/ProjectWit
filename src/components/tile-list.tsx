@@ -58,7 +58,7 @@ class TileList extends React.Component<TileListProps,TileListState> {
         // Create each <li> element and add it to array
         let compiledList = list.map((item: WitObject) => {
             console.log(typeof item)
-            let html = <Tile obj={item} />
+            let html = <Tile key={item.data.id} obj={item} />
             return html
             }
         );

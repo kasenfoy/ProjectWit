@@ -79,10 +79,10 @@ Tag.create({"id": "DELETEME"}).then((tag:Tag) => {
 // );
 
 
-ReactDOM.render(
-    <CreateFormTasks />,
-    document.getElementById('forms')
-)
+// ReactDOM.render(
+//     <CreateFormTasks />,
+//     document.getElementById('forms')
+// )
 
 
 

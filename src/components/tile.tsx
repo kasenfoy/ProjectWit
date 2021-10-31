@@ -20,7 +20,7 @@ class Tile extends React.Component<TileProps,TileState> {
 
     render() {
         let html =
-            <div className={TileCss.Tile}>
+            <div className={TileCss.Tile} key={this.props.obj.data.id}>
                 <Name name={this.props.obj.data.name}/>
                 {/*<Id id={this.props.obj.data.id}/>*/}
             </div>
