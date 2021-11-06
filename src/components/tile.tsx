@@ -9,18 +9,26 @@ interface TileState {
 }
 
 interface TileProps {
-    obj: WitObject
+    obj: WitObject,
+    setSelectedObject: Function
 }
 
 class Tile extends React.Component<TileProps,TileState> {
 
     constructor(props: TileProps) {
         super(props);
+
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick()
+    {
+        this.props.setSelectedObject(this.props.obj);
     }
 
     render() {
         let html =
-            <div className={TileCss.Tile} key={this.props.obj.data.id}>
+            <div className={TileCss.Tile} onClick={this.handleClick} key={this.props.obj.data.id}>
                 <Name name={this.props.obj.data.name}/>
                 {/*<Id id={this.props.obj.data.id}/>*/}
             </div>

@@ -3,25 +3,22 @@ import {Tag} from "../../lib/types";
 import {ITags} from "../../lib/interfaces/types";
 
 interface CreateFormTagsProps extends CreateFormBaseProps {}
-interface CreateFormTagsState extends ITags {
-    formName: string
-}
+interface CreateFormTagsState extends ITags {}
 
 class CreateFormTags extends CreateFormBase {
 
-    state: CreateFormTagsState;
+    // state: CreateFormTagsState;
 
     constructor(props: CreateFormBaseProps) {
         super(props);
 
-        this.state = this.getStateDefaults(props);
+        this.state = this.getStateDefaults();
     }
 
-    getStateDefaults(props: CreateFormTagsProps): CreateFormTagsState {
+    getStateDefaults(): CreateFormTagsState {
 
         let state = {
-            formName: 'Tags',
-            ...super.getStateDefaults(props)
+            ...super.getStateDefaults()
         }
 
         return state;
@@ -29,6 +26,11 @@ class CreateFormTags extends CreateFormBase {
 
     createObject(obj: ITags) {
         Tag.create(obj);
+    }
+
+    updateObject(obj: ITags) {
+        let tag = new Tag(obj);
+        tag.update();
     }
 
 }

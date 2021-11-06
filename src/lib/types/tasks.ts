@@ -1,6 +1,7 @@
 import {WitObject} from "./wit-object";
 import {TaskMapper} from "../data_mappers";
 import * as Interfaces from "../interfaces/";
+import {Tag} from "./tag";
 
 
 class Tasks extends WitObject {
@@ -12,6 +13,14 @@ class Tasks extends WitObject {
     constructor(params: Interfaces.ITypes.ITasks) {
         super(params);
         this.data = params;
+
+        // Defaults
+        if (params.sprints === undefined)
+            params.sprints = []
+
+        if (params.tags === undefined)
+            params.tags = []
+
         this.mapper = new TaskMapper();
     }
 
@@ -30,25 +39,33 @@ class Tasks extends WitObject {
         return await this.mapper.delete(this);
     }
 
+    async addTag(tag: Tag): Promise<Tasks>
+    {
+        return await this.mapper.addTag(this, tag)
+        throw "Not Implemented"
+    }
+
     static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
     {
         let task = new Tasks(params)
-        return await this.mapper.create(task);
+        return await Tasks.mapper.create(task);
     }
 
     static async get(id: string): Promise<Tasks>
     {
-        return new Tasks((await this.mapper.getById(id)).data);
+        return new Tasks((await Tasks.mapper.getById(id)).data);
     }
 
     static async delete(id: string): Promise<undefined>
     {
-        return await this.mapper.deleteById(id);
+        return await Tasks.mapper.deleteById(id);
     }
 
     static async scan(): Promise<Tasks[]>
     {
-        return await this.mapper.scan();
+        console.log("123Is the mapper undefinded?", Tasks.mapper)
+        console.log("123How about this?", this)
+        return await Tasks.mapper.scan();
     }
 }
 

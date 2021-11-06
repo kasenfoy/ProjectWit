@@ -1,11 +1,13 @@
 .TileList {
     box-shadow: 0 4px 10px 0 rgb(0 0 0), 0 4px 20px 0 rgb(0 0 0);
 
-    min-width: 150px;
-    max-width: 500px;
+    min-width: 35%;
+    /*max-width: 35%;*/
 
     min-height: 1000px;
     max-height: 1200px;
 
     margin: 10px;
+
+    float: left;
 }

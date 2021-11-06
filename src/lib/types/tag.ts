@@ -33,22 +33,22 @@ class Tag extends Types.WitObject {
     static async create(params: Interfaces.ITypes.ITasks): Promise<Tag>
     {
         let task = new Tag(params)
-        return await this.mapper.create(task);
+        return await Tag.mapper.create(task);
     }
 
     static async get(id: string): Promise<Tag>
     {
-        return new Tag((await this.mapper.getById(id)).data);
+        return new Tag((await Tag.mapper.getById(id)).data);
     }
 
     static async delete(id: string): Promise<undefined>
     {
-        return await this.mapper.deleteById(id);
+        return await Tag.mapper.deleteById(id);
     }
 
     static async scan(): Promise<Tag[]>
     {
-        return await this.mapper.scan();
+        return await Tag.mapper.scan();
     }
 }
 

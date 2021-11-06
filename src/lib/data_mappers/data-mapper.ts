@@ -136,6 +136,8 @@ abstract class DataMapper<T extends WitObject, D extends IWitObject>
             }
         }
 
+        console.debug("Here is the scan array: ", arr)
+
         // let transformedData = data.Items.map((item: T) => { return this.toType(<D>item) })
         return arr
     }

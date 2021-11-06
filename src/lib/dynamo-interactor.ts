@@ -161,6 +161,25 @@ class DynamoInteractor {
         // });
     }
 
+    public async update(params: any): Promise<undefined>
+    {
+        console.log("update() has been called with params", params)
+        let client = await DynamoInteractor.getInstance();
+
+        try
+        {
+            let data = await client.dynamoDocumentClient.update(params).promise();
+            await data;
+
+            console.debug("update() has returned data: ", data);
+            return undefined;
+        }
+        catch (err) {
+            console.error("update() error: ", err, " With params:" ,  params)
+            throw err
+        }
+    }
+
     public async delete(params: any): Promise<undefined>
     {
         console.debug("delete() has been called with params: ", params);

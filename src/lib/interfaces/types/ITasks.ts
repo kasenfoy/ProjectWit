@@ -5,5 +5,5 @@ export interface ITasks extends IWitObject {
     created_by?: string;
     due?: Date;
     tags?: string[];
-    sprints?: string;
+    sprints?: string[];
 }

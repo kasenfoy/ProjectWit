@@ -40,36 +40,42 @@ ReactDOM.render(
 )
 
 
-// Workflow testing
-Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {
-    console.debug("Task create() created: ", task)
-    task.get().then((task: Tasks)=>{
-        console.debug("Task get() retrieved: ", task)
-        task.data.name = "DELETEME More Stuff"
-        task.update().then((task: Tasks)=>{
-            console.debug("Task update() updated: ", task)
-            task.delete().then(()=>{
-                console.debug("Task delete() deleted, right?")
-            })
-        })
-    })
-})
-
-
-// Workflow testing Tag
-Tag.create({"id": "DELETEME"}).then((tag:Tag) => {
-    console.debug("Tag create() created: ", tag)
-    tag.get().then((tag: Tag)=>{
-        console.debug("Tag get() retrieved: ", tag)
-        tag.data.name = "DELETEME More Stuff"
-        tag.update().then((task: Tag)=>{
-            console.debug("Tag update() updated: ", tag)
-            tag.delete().then(()=>{
-                console.debug("Tag delete() deleted, right?")
-            })
-        })
-    })
-})
+// // Workflow testing
+// Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {
+//     console.debug("Task create() created: ", task)
+//     task.get().then((task: Tasks)=>{
+//         console.debug("Task get() retrieved: ", task)
+//         task.data.name = "DELETEME More Stuff"
+//         task.update().then((task: Tasks)=>{
+//             console.debug("Task update() updated: ", task)
+//             task.delete().then(()=>{
+//                 console.debug("Task delete() deleted, right?")
+//             })
+//         })
+//     })
+// })
+//
+//
+// // Workflow testing Tag
+// Tag.create({"id": "DELETEME"}).then((tag:Tag) => {
+//     console.debug("Tag create() created: ", tag)
+//     tag.get().then((tag: Tag)=>{
+//         console.debug("Tag get() retrieved: ", tag)
+//         tag.data.name = "DELETEME More Stuff"
+//         tag.update().then((task: Tag)=>{
+//             console.debug("Tag update() updated: ", tag)
+//             tag.delete().then(()=>{
+//                 console.debug("Tag delete() deleted, right?")
+//             })
+//         })
+//     })
+// })
+//
+// Tasks.get("66df61ae-4e1a-4af0-94c2-1e3173778aa7").then((task: Tasks)=>{
+//     Tag.get("DELETEME").then((tag:Tag)=> {
+//         task.addTag(tag)
+//     })
+// })
 
 // ReactDOM.render(
 //     <div id={'main-content'}>
@@ -121,20 +127,20 @@ Tag.create({"id": "DELETEME"}).then((tag:Tag) => {
 //     return data
 // })
 
-Tasks.scan().then((data: Tasks[])=>{
-    console.log('Where is the scan data?', data)
-    ReactDOM.render(
-        <div>
-        <TileList data={data} refreshFunction={Tasks.scan}/>
-        </div>,
-        document.getElementById('lists')
-    )
-
-    // Mock update
-    data[0].data.name = new Date().toISOString();
-    data[0].update();
-    // TODO Task setup here
-});
+// Tasks.scan().then((data: Tasks[])=>{
+//     console.log('Where is the scan data?', data)
+//     // ReactDOM.render(
+//     //     <div>
+//     //     <TileList data={data} refreshFunction={Tasks.scan}/>
+//     //     </div>,
+//     //     document.getElementById('lists')
+//     // )
+//
+//     // Mock update
+//     data[0].data.name = new Date().toISOString();
+//     data[0].update();
+//     // TODO Task setup here
+// });
 
 // Tasks.get(task.data.id).then((task: Tasks)=> {
 //         // console.log(task.data.name)
