@@ -1,0 +1,9 @@
+.DescribeComponentDiv {
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: fit-content;
+    border-color: red;
+    border-width: 2px;
+    background: red;
+}

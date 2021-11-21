@@ -1,41 +1,56 @@
 import { v4 as uuidv4 } from 'uuid';
-import { DynamoInteractor } from "../dynamo-interactor";
-import * as mappers from "../data_mappers/index"
-
-export interface IWitObject {
-    id?: string,
-    name?: string,
-}
+import * as Interfaces from "../interfaces"
 
 abstract class WitObject {
-    data: IWitObject;
-    // name: string;
-    // id: string;
-    abstract tableName: string;
 
-    constructor(params: IWitObject) {
+    data: Interfaces.ITypes.IWitObject;
+
+    constructor(params: Interfaces.ITypes.IWitObject ) {
         if (params === undefined)
-            params = {}
-
-        // Set the id
-        if (params.id === undefined || params.id === '')
-            params.id = uuidv4();
+            params = {id: uuidv4()}
 
         // Set the data
         this.data = params;
+
+        // Set the id
+        if (this.data.id === undefined || this.data.id === '')
+            this.data.id = uuidv4();
+
+        // Set the Created/Updated
+        if(this.data.created_utc === undefined)
+        {
+            this.data.created_utc = new Date().toISOString();
+            this.data.last_updated_utc = new Date().toISOString();
+        }
+
     }
 
-    greet(): void
+    /*** Abstract implementations ***/
+    abstract get(): Promise<WitObject>;
+    abstract update(): Promise<WitObject>;
+    abstract delete(): Promise<void>;
+
+    /*** Static implementations ***/
+    static async get(id: string): Promise<WitObject>
     {
-        console.log("Hello from WitObject!");
-        // console.log(mappers.TagMapper.create())
+        throw "Base class get() has been called. Child class needs an implementation of static get()"
     }
 
-    // get(obj: WitObject)
-    // {
-    //     // console.log(obj.tableName);
-    //     console.log(obj.tableName)
-    // }
+    static async create(params: Interfaces.ITypes.IWitObject): Promise<WitObject>
+    {
+        throw "Base class create() has been called. Child class needs an implementation of static create()"
+    }
+
+    static async scan(): Promise<WitObject[]>
+    {
+        throw "Base class create() has been called. Child class needs an implementation of static create()"
+    }
+
+
+    static generateId(): string
+    {
+        return uuidv4();
+    }
 
     retrieveFromDataStore()
     {

@@ -1,37 +1,71 @@
-import { WitObject, IWitObject } from "./wit-object";
+import {WitObject} from "./wit-object";
 import {TaskMapper} from "../data_mappers";
+import * as Interfaces from "../interfaces/";
+import {Tag} from "./tag";
 
-export interface ITasks extends IWitObject {
-    description?: string;
-}
 
 class Tasks extends WitObject {
 
-    tableName: string = "tasks";
-    data: ITasks;
+    data: Interfaces.ITypes.ITasks;
+    mapper: TaskMapper;
+    static mapper: TaskMapper = new TaskMapper();
 
-    constructor(params: ITasks) {
+    constructor(params: Interfaces.ITypes.ITasks) {
         super(params);
         this.data = params;
+
+        // Defaults
+        if (params.sprints === undefined)
+            params.sprints = []
+
+        if (params.tags === undefined)
+            params.tags = []
+
+        this.mapper = new TaskMapper();
     }
 
-    create()
+    async get(): Promise<Tasks>
     {
-        TaskMapper.create(this);
+        return await this.mapper.get(this);
     }
 
-    static get(id: string|undefined): Tasks {
-        // LEFT OFF Dunno, somewhere around here
-        const iTask = TaskMapper.get(new Tasks({id: id}));
-        const task = new Tasks(iTask);
-        console.log("Retrieved task with id:" + task.data);
-        return task;
-    }
-
-    greet(): void
+    async update(): Promise<Tasks>
     {
-        console.log("Hello from Tasks!");
-        console.log()
+        return await this.mapper.update(this);
+    }
+
+    async delete(): Promise<void>
+    {
+        return await this.mapper.delete(this);
+    }
+
+    async addTag(tag: Tag): Promise<Tasks>
+    {
+        return await this.mapper.addTag(this, tag)
+        throw "Not Implemented"
+    }
+
+    static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
+    {
+        let task = new Tasks(params)
+        return await Tasks.mapper.create(task);
+    }
+
+    static async get(id: string): Promise<Tasks>
+    {
+        return new Tasks((await Tasks.mapper.getById(id)).data);
+    }
+
+    static async delete(id: string): Promise<undefined>
+    {
+        return await Tasks.mapper.deleteById(id);
+    }
+
+    static async scan(): Promise<Tasks[]>
+    {
+        console.log("123Is the mapper undefinded?", Tasks.mapper)
+        console.log("123How about this?", this)
+        return await Tasks.mapper.scan();
     }
 }
 

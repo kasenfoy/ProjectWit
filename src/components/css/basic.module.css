@@ -1,0 +1,14 @@
+.Block {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 3px 8px;
+    /*margin: 2px 5px;*/
+
+    background-color: lightblue;
+}
+
+.Name {
+    font-family: "Arial Black";
+    margin-top: 10px;
+}
+

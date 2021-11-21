@@ -1,23 +1,23 @@
 import { DataMapper } from "./data-mapper";
 import {Tag} from "../types";
+import {ITags} from "../interfaces/types";
+import * as constants from "../constants";
 
-class TagMapper extends DataMapper
+
+class TagMapper extends DataMapper<Tag, ITags>
 {
 
-    // create(tag: Tag): void {
-    //
-    //     console.log('Creating tag')
-    // }
-    // update(): {} {
-    //     console.log('Updating tag')
-    //     return {};
-    // }
+    tableName: string = constants.config.dynamoTables.tags;
+    static tableName: string = constants.config.dynamoTables.tags;
 
-    static get(tag: Tag): void {
-        // super.get(tag);
-        console.log('Getting tag')
-        return;
+    constructor() {
+        super()
     }
+
+    toType(obj: ITags): Tag {
+        return new Tag(obj);
+    }
+
 }
 
 export {TagMapper}

@@ -1,6 +1,6 @@
 import {WitObject} from "./wit-object";
 import { Tag } from "./tag"
-import { Tasks, ITasks } from "./tasks"
+import { Tasks } from "./tasks"
+import { Sprints } from "./sprints";
 
-export {Tag, Tasks, WitObject};
-export type { ITasks };
+export {Tag, Tasks, Sprints, WitObject};
