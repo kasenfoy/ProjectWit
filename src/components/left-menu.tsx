@@ -31,7 +31,7 @@ class LeftMenu extends React.Component<LeftMenuProps, LeftMenuState> {
                 <LeftMenuButton activateComponent={WitComponent.TASKS} handleChange={this.props.handleActiveComponentChange}/>
                 <LeftMenuButton activateComponent={WitComponent.TAGS} handleChange={this.props.handleActiveComponentChange}/>
                 <LeftMenuButton activateComponent={WitComponent.SPRINTS} handleChange={this.props.handleActiveComponentChange}/>
-                <LeftMenuButton activateComponent={WitComponent.USERS} handleChange={this.props.handleActiveComponentChange}/>
+                {/*<LeftMenuButton activateComponent={WitComponent.USERS} handleChange={this.props.handleActiveComponentChange}/>*/}
             </div>
 
         return html;

@@ -23,6 +23,9 @@ class Block extends React.Component<BlockProps, BlockState>
     constructor(props: BlockProps) {
         super(props);
         this.state = {name: this.props.id}
+
+        // Bindings
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleDelete() {
@@ -34,10 +37,13 @@ class Block extends React.Component<BlockProps, BlockState>
 
     render() {
         let html =
-            <div className={BasicModuleCss.Block} onClick={this.handleDelete}>
-                <b>{this.state.name}</b>
-            </div>
+            <div className={BasicModuleCss.Block} >
+                <div className={BasicModuleCss.BlockContent} >
+                    <b>{this.state.name}</b>
+                </div>
 
+                <div className={BasicModuleCss.BlockDelete} onClick={this.handleDelete}><b>X</b></div>
+            </div>
 
         return html
     }

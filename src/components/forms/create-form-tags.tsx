@@ -33,6 +33,10 @@ class CreateFormTags extends CreateFormBase {
         tag.update();
     }
 
+    async delete(id: string): Promise<void> {
+        return await Tag.delete(id);
+    }
+
 }
 
 export { CreateFormTags }

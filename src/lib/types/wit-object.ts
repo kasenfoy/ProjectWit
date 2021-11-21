@@ -6,23 +6,26 @@ abstract class WitObject {
     data: Interfaces.ITypes.IWitObject;
 
     constructor(params: Interfaces.ITypes.IWitObject ) {
+
+
         if (params === undefined)
             params = {id: uuidv4()}
 
         // Set the data
         this.data = params;
 
-        // Set the id
+        // Set defaults
+
+        // Set the id default (this is repeated in case id is blank or undefined)
         if (this.data.id === undefined || this.data.id === '')
             this.data.id = uuidv4();
 
-        // Set the Created/Updated
-        if(this.data.created_utc === undefined)
-        {
-            this.data.created_utc = new Date().toISOString();
-            this.data.last_updated_utc = new Date().toISOString();
-        }
+        // Auto dates default
+        this.data.created_utc = this.data.created_utc || new Date().toISOString();
+        this.data.last_updated_utc = this.data.last_updated_utc || new Date().toISOString();
 
+        // Name default
+        this.data.name = this.data.name || ''
     }
 
     /*** Abstract implementations ***/

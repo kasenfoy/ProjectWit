@@ -1,5 +1,5 @@
 import React, {ChangeEventHandler, FormEventHandler} from "react";
-import {Tag, WitObject} from "../../lib/types";
+import {Sprints, Tag, WitObject} from "../../lib/types";
 import {IWitObject} from "../../lib/interfaces/types";
 import CreateFormCss from "../css/create-form.module.css"
 import {WitComponent} from "../primary-layout";
@@ -7,13 +7,15 @@ import {Name} from "../basic/name";
 import {ISelectSearch} from "../../lib/interfaces/ISelectSearch";
 import SelectSearch, {fuzzySearch} from "react-select-search";
 import SelectSearchCss from "../css/select-search.module.css";
+import {DateHelper} from "../../lib/helpers";
 
 
 // Make the props a list of form item components to include (ID, Name, Description, etc)
 interface CreateFormBaseProps {
     activeComponent: WitComponent
     selectedObject?: WitObject,
-    tagData?: Tag[]
+    tagData?: Tag[],
+    sprintData?: Sprints[]
 }
 
 interface CreateFormBaseState extends IWitObject{};
@@ -46,6 +48,7 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
         // console.log("this.state from constructor: ", this.state)
         this.handleChange   = this.handleChange.bind(this);
         this.handleSubmit   = this.handleSubmit.bind(this);
+        this.handleDelete   = this.handleDelete.bind(this);
         // this.getState       = this.getState.bind(this);
         this.createObject   = this.createObject.bind(this);
 
@@ -68,6 +71,7 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
         return selectSearchArr
 
     }
+
 
     getStateDefaults(): IWitObject
     {
@@ -126,6 +130,11 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
 
     }
 
+    handleDelete()
+    {
+        this.delete(this.state.id)
+    }
+
     compileForm(components: JSX.Element[]): JSX.Element
     {
         let html =
@@ -137,6 +146,7 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
 
                     { this.props.selectedObject === undefined && <input type="submit" value="Create" />}
                     { this.props.selectedObject !== undefined && <input type="submit" value="Update" />}
+                    { this.props.selectedObject !== undefined && <input type="button" value="delete" onClick={this.handleDelete} />}
                 </form>
             </div>
         return html;
@@ -159,11 +169,11 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
 
 
         if (this.state.created_utc !== undefined) {
-            html.push(<p><Name name={"Created"}/> {this.state.created_utc}</p>)
+            html.push(<p><Name name={"Created"}/> {DateHelper.toStringDateTime(this.state.created_utc)}</p>)
         }
 
         if (this.state.last_updated_utc !== undefined) {
-            html.push(<p><Name name={"Updated"}/> {this.state.last_updated_utc}</p>)
+            html.push(<p><Name name={"Updated"}/> {DateHelper.toStringDateTime(this.state.last_updated_utc)}</p>)
         }
 
         html.push(
@@ -195,11 +205,47 @@ class CreateFormBase extends React.PureComponent<CreateFormBaseProps, CreateForm
         console.debug("Create-form component did mount")
     }
 
+    // This gets triggered when we select a new object
     componentDidUpdate(prevProps: Readonly<CreateFormBaseProps>, prevState: Readonly<CreateFormBaseState>, snapshot?: any) {
         if(prevProps.selectedObject !== this.props.selectedObject)
         {
-            this.setState(this.getStateDefaults());
+            if (this.props.selectedObject === undefined)
+            {
+                // Implement the clear state
+                let witObject = this.generateEmptyWitObject();
+                console.debug(witObject)
+                this.setState(witObject.data)
+            }
+            else
+            {
+                // Run this when selected object is not undefined
+                this.setState(this.getStateDefaults());
+            }
         }
+    }
+
+    generateEmptyWitObject(): WitObject
+    {
+        throw "generateEmptyWitObject called from base class, you must implement a child method."
+    }
+
+    async retrieveTagNameFromId(id: string)
+    {
+        console.debug("retrieveTagNameFromId called with id: ", id)
+        let tag = await Tag.get(id);
+        return tag.data?.name || 'DELETED TAG PLEASE REMOVE MANUALLY FROM OBJECT';
+    }
+
+    async retrieveSprintNameFromId(id: string)
+    {
+        console.debug("retrieveSprintNameFromId called with id: ", id)
+        let sprint = await Sprints.get(id);
+        return sprint.data?.name || 'DELETED SPRINT PLEASE REMOVE MANUALLY FROM OBJECT';
+    }
+
+    async delete(id: string)
+    {
+        throw "Base class implementation of delete() thrown, need to implement child class"
     }
 
     render() {

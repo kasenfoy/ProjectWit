@@ -1,4 +1,4 @@
-import { DataMapper } from "./data-mapper";
+import {DataMapper, DataMapperListActions} from "./data-mapper";
 import {Tag, Tasks, WitObject} from "../types";
 import {DynamoInteractor} from "../dynamo-interactor";
 import {IScanOutput} from "../interfaces/dynamodb/IScanOutput";
@@ -7,6 +7,7 @@ import {ITasks} from "../interfaces/types";
 import * as constants from "../constants";
 import {DynamoDB} from "aws-sdk";
 
+
 class TaskMapper extends DataMapper<Tasks, ITasks>
 {
     tableName: string = constants.config.dynamoTables.tasks;
@@ -14,6 +15,65 @@ class TaskMapper extends DataMapper<Tasks, ITasks>
 
     constructor() {
         super()
+    }
+
+    // Implementing updateTags
+    async updateTags(task: Tasks, tag: Tag, action: DataMapperListActions)
+    {
+        console.debug("updateTag() has been called in task-mapper with tag: ", tag);
+
+        // Update the comparison operator
+        // Adds expect the task to not contain label
+        // Delete expects the task to contain label
+        let comparisonOperator: string;
+        comparisonOperator = action === DataMapperListActions.ADD ? 'NOT_CONTAINS' : 'CONTAINS'
+
+        // Expects key name to be tags
+        var params =
+            {
+                TableName: this.tableName,
+                Key: {'id': task.data.id},
+                // UpdateExpression: 'set #t = :tags',
+                AttributeUpdates: {
+                    'tags': {
+                        Action: action,
+                        Value: [tag.data.id]
+                    }
+                },
+                Expected: {
+                    'tags': {
+                        ComparisonOperator: comparisonOperator,
+                        Value: tag.data.id
+                    }
+                }
+            }
+
+        let client = await DynamoInteractor.getInstance();
+
+        // This will be undefined, we just want to wait until it is done
+        try {
+            let data = await client.update(params);
+            await data
+
+            // Unfortunately with Dynamo we have to call a 'get()' on the ID right after inserting
+            return await this.get(task)
+        }
+        catch (e) {
+            try {
+                // @ts-ignore Expect e to be of dynamo
+                if (e.code === 'ConditionalCheckFailedException')
+                {
+                    let message = "Task " + action + " failed on conditional check"
+                    // TODO spawn error message dropdown
+                    throw message
+                }
+            }
+            catch (e) {
+                throw e
+            }
+            throw e
+        }
+
     }
 
     // Can be abstracted to updateTag

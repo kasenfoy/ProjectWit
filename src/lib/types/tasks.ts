@@ -2,6 +2,8 @@ import {WitObject} from "./wit-object";
 import {TaskMapper} from "../data_mappers";
 import * as Interfaces from "../interfaces/";
 import {Tag} from "./tag";
+import {DataMapperListActions} from "../data_mappers/data-mapper";
+import {Status} from "./sprints";
 
 
 class Tasks extends WitObject {
@@ -15,11 +17,18 @@ class Tasks extends WitObject {
         this.data = params;
 
         // Defaults
-        if (params.sprints === undefined)
-            params.sprints = []
+        // if (params.sprints === undefined)
+        //     params.sprints = []
+        //
+        // if (params.tags === undefined)
+        //     params.tags = []
 
-        if (params.tags === undefined)
-            params.tags = []
+        params.description = params.description || ""
+        params.created_by = params.created_by || ""
+        params.due = params.due || ""
+        params.tags = params.tags || []
+        params.sprint = params.sprint || ""
+        params.status = params.status || Status.NOT_STARTED
 
         this.mapper = new TaskMapper();
     }
@@ -41,8 +50,12 @@ class Tasks extends WitObject {
 
     async addTag(tag: Tag): Promise<Tasks>
     {
-        return await this.mapper.addTag(this, tag)
-        throw "Not Implemented"
+        return await this.mapper.updateTags(this, tag, DataMapperListActions.ADD)
+    }
+
+    async removeTag(tag: Tag): Promise<Tasks>
+    {
+        return await this.mapper.updateTags(this, tag, DataMapperListActions.DELETE)
     }
 
     static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>

@@ -3,14 +3,15 @@ import {CreateFormTasks} from "./create-form-tasks";
 import {CreateFormTags} from "./create-form-tags";
 import {WitComponent} from "../primary-layout";
 import FormHolderCss from "../css/form-holder.module.css"
-import {Tag, WitObject} from "../../lib/types";
+import {Sprints, Tag, WitObject} from "../../lib/types";
 import {CreateFormSprints} from "./create-form-sprints";
 
 
 interface FormHolderProps {
     selectedObject?: WitObject,
     activeComponent: WitComponent,
-    tagData?: Tag[]
+    tagData?: Tag[],
+    sprintData?: Sprints[]
 }
 
 
@@ -28,7 +29,7 @@ class FormHolder extends React.Component<FormHolderProps, {}>
             <div id={"form-holder"} className={FormHolderCss.FormHolder}>
                 {
                     this.props.activeComponent === WitComponent.TASKS
-                    && <CreateFormTasks activeComponent={this.props.activeComponent} selectedObject={this.props.selectedObject} tagData={this.props.tagData} />}
+                    && <CreateFormTasks activeComponent={this.props.activeComponent} selectedObject={this.props.selectedObject} tagData={this.props.tagData} sprintData={this.props.sprintData}/>}
                 {
                     this.props.activeComponent === WitComponent.TAGS
                     && <CreateFormTags activeComponent={this.props.activeComponent} selectedObject={this.props.selectedObject} />

@@ -8,6 +8,11 @@ import {ITasks, IWitObject} from "../interfaces/types";
  * Abstract class to implement the Data Mapper design pattern
  */
 
+enum DataMapperListActions {
+    ADD = 'ADD',
+    DELETE = 'DELETE',
+    REMOVE = 'REMOVE'
+}
 
 abstract class DataMapper<T extends WitObject, D extends IWitObject>
 {
@@ -160,4 +165,4 @@ abstract class DataMapper<T extends WitObject, D extends IWitObject>
 
 
 
-export { DataMapper }
+export { DataMapper, DataMapperListActions }

@@ -111,6 +111,7 @@ class PrimaryLayout extends React.Component<PrimaryLayoutProps, PrimaryLayoutSta
                     activeComponent={this.state.activeComponent}
                     selectedObject={this.state.selectedObject}
                     tagData={this.state.tagData}
+                    sprintData={this.state.sprintData}
                 />
                 <div id={"testing"}></div>
 

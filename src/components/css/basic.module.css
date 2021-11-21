@@ -7,6 +7,23 @@
     background-color: lightblue;
 }
 
+.BlockContent {
+    display: inline-block;
+}
+
+.BlockDelete {
+    display: inherit;
+    border-radius: 5px;
+    /*margin: 2px 5px;*/
+    margin-left: 5px;
+    color: firebrick;
+}
+
+.BlockDelete:hover::after {
+    content: " - Delete";
+    display: inherit;
+}
+
 .Name {
     font-family: "Arial Black";
     margin-top: 10px;

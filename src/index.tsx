@@ -22,9 +22,8 @@ import {PrimaryLayout} from "./components/primary-layout";
 /*** CSS ***/
 import "./styles.css"
 import {CreateFormTasks} from "./components/forms/create-form-tasks";
-
-
-
+// import {DateHelper} from "./lib/helpers";
+import {DateHelper} from "./lib/helpers";
 
 // Default react stuff
 // ReactDOM.render(
@@ -39,6 +38,11 @@ ReactDOM.render(
     document.getElementById('root')
 )
 
+console.debug(DateHelper.fromString('11/17/2021, 06:03:46 PM PST'))
+console.debug(DateHelper.fromString('07/07/2021'))
+
+console.debug(DateHelper.toStringDate(new Date()))
+console.debug(DateHelper.toStringDateTime(new Date()))
 
 // // Workflow testing
 // Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {
