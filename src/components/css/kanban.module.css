@@ -1,0 +1,19 @@
+.Kanban {
+    background-color: #888888;
+    display: flex;
+    float: left;
+}
+
+.Lane {
+    background-color: white;
+    display: inline-block;
+    min-height: 300px;
+    min-width: 100px;
+    margin: 10px;
+}
+
+.KanbanBlock {
+    display: block;
+    background-color: #61dafb;
+    content: "KanbanBlockCss";
+}

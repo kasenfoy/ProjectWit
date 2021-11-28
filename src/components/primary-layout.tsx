@@ -8,6 +8,7 @@ import {LeftMenu} from "./left-menu";
 import PrimaryLayoutCss from "./css/primary-layout.module.css"
 import SelectSearchCss from "./css/select-search.module.css"
 import SelectSearch from "react-select-search";
+import {Kanban} from "./Kanban/Kanban";
 
 // TODO Global hooks (Not necessary, props for data?) should be done here for data.
 
@@ -113,6 +114,9 @@ class PrimaryLayout extends React.Component<PrimaryLayoutProps, PrimaryLayoutSta
                     tagData={this.state.tagData}
                     sprintData={this.state.sprintData}
                 />
+
+                <Kanban />
+                
                 <div id={"testing"}></div>
 
             </div>
