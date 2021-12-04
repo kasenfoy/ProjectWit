@@ -115,7 +115,9 @@ class PrimaryLayout extends React.Component<PrimaryLayoutProps, PrimaryLayoutSta
                     sprintData={this.state.sprintData}
                 />
 
-                <Kanban />
+                <Kanban
+                    tasks={this.state.taskData}
+                />
                 
                 <div id={"testing"}></div>
 
