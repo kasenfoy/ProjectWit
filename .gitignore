@@ -6,3 +6,5 @@ secrets.txt
 notes.txt
 todo.txt
 scratchFiles/
+build/
+.DS_Store
