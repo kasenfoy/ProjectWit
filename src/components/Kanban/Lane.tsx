@@ -3,6 +3,7 @@ import {Status} from "../../lib/types/sprints";
 import KanbanCss from "../css/kanban.module.css";
 import {KanbanBlock} from "./KanbanBlock";
 import {Tasks} from "../../lib/types";
+import {Name} from "../basic/name";
 
 interface LaneProps {
     handleTaskStatusChange?: Function,
@@ -23,7 +24,7 @@ class Lane extends React.Component<LaneProps, LaneState>
     generateTaskBlocks(): JSX.Element[]
     {
         let blocks: JSX.Element[] = new Array<JSX.Element>();
-        for (let i = 0; i<this.props.tasks.length; i++)
+        for (let i = 0; i<this.props.tasks?.length; i++)
         {
             if (this.props.tasks[i].data.status === undefined || this.props.tasks[i].data.name === undefined) {
             console.error("Task Status or Name is not defined for: ", this.props.tasks[i].data)
@@ -72,7 +73,8 @@ class Lane extends React.Component<LaneProps, LaneState>
     render() {
         let html =
             <div className={KanbanCss.Lane} onDrop={this.handleDrop} onDragOver={this.allowDrop}>
-                {this.props.status}
+                <Name name={this.props.status} />
+                <hr/>
                 {/*{this.generateFakeBlocks()}*/}
                 {this.generateTaskBlocks()}
             </div>

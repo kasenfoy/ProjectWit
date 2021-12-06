@@ -36,8 +36,9 @@ class TileList extends React.Component<TileListProps,TileListState> {
      */
     compileList()
     {
+        // console.debug(this.props.data)
         // Create each <li> element and add it to array
-        let compiledList = this.props.data.map((item: WitObject) => {
+        let compiledList = this.props.data?.map((item: WitObject) => {
             let html = <Tile key={item.data.id} obj={item} setSelectedObject={this.props.setSelectedObject}/>
             return html
             }

@@ -4,6 +4,7 @@ import * as Interfaces from "../interfaces/";
 import {Tag} from "./tag";
 import {DataMapperListActions} from "../data_mappers/data-mapper";
 import {Status} from "./sprints";
+import {TaskEventRegistry} from "../event_registries/task-event-registry";
 
 
 class Tasks extends WitObject {
@@ -40,28 +41,38 @@ class Tasks extends WitObject {
 
     async update(): Promise<Tasks>
     {
-        return await this.mapper.update(this);
+        let data = await this.mapper.update(this);
+        Tasks.dataChanged();
+        return data;
     }
 
     async delete(): Promise<void>
     {
-        return await this.mapper.delete(this);
+        let data = await this.mapper.delete(this);
+        Tasks.dataChanged();
+        return data
     }
 
     async addTag(tag: Tag): Promise<Tasks>
     {
-        return await this.mapper.updateTags(this, tag, DataMapperListActions.ADD)
+        let data = await this.mapper.updateTags(this, tag, DataMapperListActions.ADD)
+        Tasks.dataChanged();
+        return data
     }
 
     async removeTag(tag: Tag): Promise<Tasks>
     {
-        return await this.mapper.updateTags(this, tag, DataMapperListActions.DELETE)
+        let data = await this.mapper.updateTags(this, tag, DataMapperListActions.DELETE)
+        Tasks.dataChanged();
+        return data
     }
 
     static async create(params: Interfaces.ITypes.ITasks): Promise<Tasks>
     {
         let task = new Tasks(params)
-        return await Tasks.mapper.create(task);
+        let data = await Tasks.mapper.create(task);
+        Tasks.dataChanged();
+        return data
     }
 
     static async get(id: string): Promise<Tasks>
@@ -71,14 +82,19 @@ class Tasks extends WitObject {
 
     static async delete(id: string): Promise<undefined>
     {
-        return await Tasks.mapper.deleteById(id);
+        let data = await Tasks.mapper.deleteById(id);
+        Tasks.dataChanged();
+        return data
     }
 
     static async scan(): Promise<Tasks[]>
     {
-        console.log("123Is the mapper undefinded?", Tasks.mapper)
-        console.log("123How about this?", this)
         return await Tasks.mapper.scan();
+    }
+
+    static dataChanged(): void
+    {
+        TaskEventRegistry.Instance().onDataChange()
     }
 }
 

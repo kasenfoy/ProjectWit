@@ -4,6 +4,7 @@ import * as Types from "../types"
 import * as Interfaces from "../interfaces";
 import {TagMapper} from "../data_mappers/";
 import {Tasks} from "../types";
+import {TaskEventRegistry} from "../event_registries/task-event-registry";
 
 class Tag extends Types.WitObject {
 
@@ -16,6 +17,12 @@ class Tag extends Types.WitObject {
         this.data = params;
         this.mapper = new TagMapper();
     }
+
+    dataChanged(): void
+    {
+            TaskEventRegistry.Instance().onDataChange()
+    }
+
     async get(): Promise<Tag>
     {
         return await this.mapper.get(this);

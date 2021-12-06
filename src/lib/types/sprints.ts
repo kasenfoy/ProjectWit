@@ -3,6 +3,7 @@ import {IWitObject} from "../interfaces/types";
 import {SprintMapper} from "../data_mappers/sprint-mapper";
 import {TaskMapper} from "../data_mappers";
 import {DateHelper} from "../helpers/DateHelper";
+import {TaskEventRegistry} from "../event_registries/task-event-registry";
 
 enum Status {
     NOT_STARTED = "Not Started",
@@ -34,6 +35,11 @@ class Sprints extends WitObject
 
         this.mapper = new SprintMapper();
 
+    }
+
+    dataChanged(): void
+    {
+            TaskEventRegistry.Instance().onDataChange()
     }
 
     async get(): Promise<Sprints>

@@ -32,6 +32,7 @@ abstract class WitObject {
     abstract get(): Promise<WitObject>;
     abstract update(): Promise<WitObject>;
     abstract delete(): Promise<void>;
+    // abstract dataChanged(): void;
 
     /*** Static implementations ***/
     static async get(id: string): Promise<WitObject>
@@ -49,6 +50,10 @@ abstract class WitObject {
         throw "Base class create() has been called. Child class needs an implementation of static create()"
     }
 
+    static dataChanged(): void
+    {
+        throw "Base class dataChanged() has been called. Child class needs an implementation of static dataChanged()"
+    }
 
     static generateId(): string
     {
