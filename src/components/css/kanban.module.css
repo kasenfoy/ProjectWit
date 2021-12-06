@@ -1,19 +1,35 @@
 .Kanban {
-    background-color: #888888;
-    display: flex;
+
+    margin: 10px;
     float: left;
+    width: auto;
+    display: flex;
+
+    min-width: 50%;
+    max-width: 50%;
+
+    min-height: 48%;
+    max-height: 48%;
+
+    box-shadow: 0 4px 10px 0 rgb(0 0 0), 0 4px 20px 0 rgb(0 0 0);
 }
 
 .Lane {
     background-color: white;
     display: inline-block;
     min-height: 300px;
-    min-width: 100px;
-    margin: 10px;
+    /*min-width: 100px;*/
+    max-width: 20%;
+    min-width: 20%;
+    margin: 2.5%;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0), 0 4px 20px 0 rgb(0 0 0);
+
 }
 
 .KanbanBlock {
     display: block;
     background-color: #61dafb;
     content: "KanbanBlockCss";
+    box-shadow: 0 4px 10px 0 rgb(0 0 0), 0 4px 20px 0 rgb(0 0 0);
+    margin: 5px;
 }

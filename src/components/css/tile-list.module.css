@@ -4,10 +4,15 @@
     min-width: 35%;
     /*max-width: 35%;*/
 
-    min-height: 1000px;
-    max-height: 1200px;
+    min-height: 98vh;
+    max-height: 98vh;
+    /*max-height: 1200px;*/
 
-    margin: 10px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+
+    margin-left: 10px;
+    margin-right: 10px;
 
     float: left;
 }

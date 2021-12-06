@@ -6,6 +6,10 @@
     display: flex;
 
     min-width: 50%;
+    min-height: 48%;
+    max-height: 48%;
+
+    overflow-y: auto;
 
     box-shadow: 0 4px 10px 0 rgb(0 0 0), 0 4px 20px 0 rgb(0 0 0);
     /*color: aqua;*/
