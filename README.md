@@ -1,11 +1,11 @@
 # Project Wise Issue Tracker - WIT
 
 Project WIT is an issue tracking and Kanban board application. 
-It is designed to work in tandem with the AWS infrastructure deployed via: [https://github.com/kasenfoy/project-wit-cdk]()
+It is designed to work in tandem with the AWS infrastructure deployed via: [https://github.com/kasenfoy/project-wit-cdk](https://github.com/kasenfoy/project-wit-cdk)
 
 This project utilizes Typescript and React to power the Single Page Web Application. It interfaces directly with DynamoDB as a data store for all application data. 
 
-For ```SDEV-435``` class members you may use the default (dev) setup to build/run locally. Simply clone this package and run the command ```npm run start``` from the command line. Please note that you will see all other users data when using this setup. If you wish to deploy your own instance for private use/data you can see the CDK infrastructure and configuration setup here: [https://github.com/kasenfoy/project-wit-cdk]() 
+For ```SDEV-435``` class members you may use the default (dev) setup to build/run locally. Simply clone this package and run the command ```npm run start``` from the command line. Please note that you will see all other users data when using this setup. If you wish to deploy your own instance for private use/data you can see the CDK infrastructure and configuration setup here: [https://github.com/kasenfoy/project-wit-cdk](https://github.com/kasenfoy/project-wit-cdk) 
 
 For running just this React application and using the default configuration you will need [Node.js (v14.17.6)](https://nodejs.org/en/download/) installed and npm (v6.14.15) installed to get started. Run ```npm install``` to install the projects dependencies.
 For private developer setup you will need to deploy the CDK code using the instructions found here: [CDK README](https://github.com/kasenfoy/project-wit-cdk/blob/mainline/README.md) 
@@ -19,7 +19,7 @@ For private setup please change the [configuration](https://github.com/kasenfoy/
 4. ```cd ProjectWit```
 5. Run ```npm install```
 6. Run ```npm run start```
-7. Visit [https://localhost:3000]() 
+7. Visit [https://localhost:3000](https://localhost:3000) 
 
 # 
 Below is the default React Developer setup README entries. 
