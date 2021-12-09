@@ -27,10 +27,56 @@ const dev: stageVariables= {
 
 }
 
+const beta: stageVariables= {
+    authApiUrl: 'https://2sn8t4joqc.execute-api.us-west-2.amazonaws.com/prod/auth',
+    IAMUserARN: 'arn:aws:iam::326480716745:role/dynamo-auth-role-beta',
+    dynamoTables: {
+        tasks: 'project-wit-tasks-beta',
+        tags: 'project-wit-tags-beta',
+        users: 'project-wit-users-beta',
+        sprints: 'project-wit-sprints-beta',
+        lanes: 'project-wit-lanes-beta',
+        comments: 'project-wit-comments-beta'
+    }
+}
+
+const prod: stageVariables= {
+    authApiUrl: 'https://0ieoa7wmvf.execute-api.us-west-2.amazonaws.com/prod/auth',
+    IAMUserARN: 'arn:aws:iam::326480716745:role/dynamo-auth-role-prod',
+    dynamoTables: {
+        tasks: 'project-wit-tasks-prod',
+        tags: 'project-wit-tags-prod',
+        users: 'project-wit-users-prod',
+        sprints: 'project-wit-sprints-prod',
+        lanes: 'project-wit-lanes-prod',
+        comments: 'project-wit-comments-prod'
+    }
+}
+
 // TODO Implement this after moving to prod
 // const prod: stageVariables = {
 //
 // }
-// export const config = process.env.NODE_ENV === ‘development’ ? dev : prod;
+let conf;
+switch (process.env.REACT_APP_ENV)
+{
+    case 'development':
+        conf = dev;
+        break;
+    case 'beta':
+        conf = beta;
+        break;
+    case 'production':
+        conf = prod;
+        break;
+    default:
+        throw `Error, REACT_APP_ENV set to invalid value '${process.env.REACT_APP_ENV}'`
+}
 
-export const config = dev
+console.debug("REACT_APP_ENV=", process.env.REACT_APP_ENV)
+console.debug("config=", conf)
+
+export const config = conf;
+// export const config = process.env.NODE_ENV === 'production' ? prod : dev;
+
+// export const config = dev

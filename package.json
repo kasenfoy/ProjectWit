@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/preset-typescript": "^7.16.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -18,14 +19,17 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-select-search": "^3.0.8",
-    "typescript": "^4.4.3",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-beta": "react-scripts start REACT_APP_ENV='beta'",
+    "start-prod": "REACT_APP_ENV=\"production\" react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts src/test",
+    "build-beta": " react-scripts build",
+    "build-prod": "react-scripts build REACT_APP_ENV='production'",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,7 +52,10 @@
   },
   "devDependencies": {
     "css-loader": "^6.4.0",
+    "jest": "^26.6.0",
+    "regenerator-runtime": "^0.13.9",
     "style-loader": "^3.3.1",
+    "typescript": "^4.5.2",
     "webpack": "^4.44.2",
     "webpack-cli": "^4.9.1"
   }
