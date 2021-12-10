@@ -4,10 +4,11 @@ Project WIT is an issue tracking and Kanban board web application powered by Typ
 
 Here are the assignment deliverable links:
 * [GitHub Project Page](https://kasenfoy.github.io/ProjectWit/)
-* [General Walk-through Video](https://drive.google.com/file/d/1Dsy1Nr68krdW_aXoeW9MGxTf3XF-voyA/view?usp=sharing)
-* [Data Store Walk-through Video](https://drive.google.com/file/d/1rTqv8rMhPKChyepNWes1x__uLY0vWyVK/view?usp=sharing)
-* [Verification and Validation Walk-through Video](https://drive.google.com/file/d/1_Ai48vDItXimy5SfaAqbWaG_TPGJO2aD/view?usp=sharing)
-* [Re-usable Code Walk-through Video](https://drive.google.com/file/d/1hEGmijSxbgnz9EAuRdEkHl4I6PaQNQZg/view?usp=sharing)
+* Videos (Make sure to turn up the quality in settings!)
+  * [General Walk-through](https://drive.google.com/file/d/1Dsy1Nr68krdW_aXoeW9MGxTf3XF-voyA/view?usp=sharing)
+  * [Data Store Walk-through](https://drive.google.com/file/d/1rTqv8rMhPKChyepNWes1x__uLY0vWyVK/view?usp=sharing)
+  * [Verification and Validation Walk-through](https://drive.google.com/file/d/1_Ai48vDItXimy5SfaAqbWaG_TPGJO2aD/view?usp=sharing)
+  * [Re-usable Code Walk-through](https://drive.google.com/file/d/1hEGmijSxbgnz9EAuRdEkHl4I6PaQNQZg/view?usp=sharing)
 * [Project Documentation File](https://docs.google.com/document/d/11DlfI9OHI27urmIjuD08oBDPBmaIhy9F/edit?usp=sharing&ouid=109654106749511515734&rtpof=true&sd=true)
 * Repositories
   * [Project WIT](https://github.com/kasenfoy/ProjectWit) 
