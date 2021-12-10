@@ -4,7 +4,7 @@ Project WIT is an issue tracking and Kanban board web application powered by Typ
 
 Here are the assignment deliverable links:
 * [GitHub Project Page](https://kasenfoy.github.io/ProjectWit/)
-* Videos (Make sure to turn up the quality in settings!)
+* Videos (I recommend downloading, however if you stream make sure to turn up the quality in settings!)
   * [General Walk-through](https://drive.google.com/file/d/1Dsy1Nr68krdW_aXoeW9MGxTf3XF-voyA/view?usp=sharing)
   * [Data Store Walk-through](https://drive.google.com/file/d/1rTqv8rMhPKChyepNWes1x__uLY0vWyVK/view?usp=sharing)
   * [Verification and Validation Walk-through](https://drive.google.com/file/d/1_Ai48vDItXimy5SfaAqbWaG_TPGJO2aD/view?usp=sharing)
