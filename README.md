@@ -1,9 +1,23 @@
 # Project Wise Issue Tracker - WIT
 
-Project WIT is an issue tracking and Kanban board application. 
-It is designed to work in tandem with the AWS infrastructure deployed via: [https://github.com/kasenfoy/project-wit-cdk](https://github.com/kasenfoy/project-wit-cdk)
+Project WIT is an issue tracking and Kanban board web application powered by TypeScript and React, you can access the [production web application here](http://project-wit-prod-projectwitprod6a34b80a-n86wjljs4umt.s3-website-us-west-2.amazonaws.com/). 
 
-This project utilizes Typescript and React to power the Single Page Web Application. It interfaces directly with DynamoDB as a data store for all application data. 
+Here are the assignment deliverable links:
+* [GitHub Project Page](https://kasenfoy.github.io/ProjectWit/)
+* [General Walk-through Video](https://drive.google.com/file/d/1Dsy1Nr68krdW_aXoeW9MGxTf3XF-voyA/view?usp=sharing)
+* [Data Store Walk-through Video](https://drive.google.com/file/d/1rTqv8rMhPKChyepNWes1x__uLY0vWyVK/view?usp=sharing)
+* [Verification and Validation Walk-through Video](https://drive.google.com/file/d/1_Ai48vDItXimy5SfaAqbWaG_TPGJO2aD/view?usp=sharing)
+* [Re-usable Code Walk-through Video](https://drive.google.com/file/d/1hEGmijSxbgnz9EAuRdEkHl4I6PaQNQZg/view?usp=sharing)
+* [Project Documentation File](https://docs.google.com/document/d/11DlfI9OHI27urmIjuD08oBDPBmaIhy9F/edit?usp=sharing&ouid=109654106749511515734&rtpof=true&sd=true)
+* Repositories
+  * [Project WIT](https://github.com/kasenfoy/ProjectWit) 
+  * [Project WIT CDK](https://github.com/kasenfoy/project-wit-cdk)
+* [Production Web Application](http://project-wit-prod-projectwitprod6a34b80a-n86wjljs4umt.s3-website-us-west-2.amazonaws.com/)
+
+
+Project WIT is designed to work in tandem with the AWS infrastructure deployed via: [https://github.com/kasenfoy/project-wit-cdk](https://github.com/kasenfoy/project-wit-cdk)
+
+This project utilizes Typescript and React to power the Single Page Web Application. It interfaces directly with DynamoDB as a data store for all application data and is hosted on S3 here: . 
 
 For ```SDEV-435``` class members you may use the default (dev) setup to build/run locally. Simply clone this package and run the command ```npm run start``` from the command line. Please note that you will see all other users data when using this setup. If you wish to deploy your own instance for private use/data you can see the CDK infrastructure and configuration setup here: [https://github.com/kasenfoy/project-wit-cdk](https://github.com/kasenfoy/project-wit-cdk) 
 
@@ -12,7 +26,7 @@ For private developer setup you will need to deploy the CDK code using the instr
 For private setup please change the [configuration](https://github.com/kasenfoy/ProjectWit/blob/mainline/src/lib/constants.ts) file to represent the ```outputs``` from your CDK deployment.  
 
 # TL;DR Setup
-1. Install Node.JS (>= v14.17.6)
+1. Install [Node.JS (>= v14.17.6)](https://nodejs.org/en/download/)
 2. Install NPM (>= v6.14.15)
 3. Clone this repository:
    1. ```git clone https://github.com/kasenfoy/ProjectWit.git```
