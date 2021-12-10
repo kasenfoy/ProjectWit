@@ -38,11 +38,12 @@ ReactDOM.render(
     document.getElementById('root')
 )
 
+let d = '11/17/2021, 06:03:46 PM PST'
 console.debug(DateHelper.fromString('11/17/2021, 06:03:46 PM PST'))
 console.debug(DateHelper.fromString('07/07/2021'))
 
-console.debug(DateHelper.toStringDate(new Date()))
-console.debug(DateHelper.toStringDateTime(new Date()))
+console.debug(DateHelper.toStringDate(new Date(d)))
+console.debug(DateHelper.toStringDateTime(new Date(d)))
 
 // // Workflow testing
 // Tasks.create({"id": "DELETEME"}).then((task:Tasks) => {

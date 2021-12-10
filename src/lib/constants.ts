@@ -53,10 +53,6 @@ const prod: stageVariables= {
     }
 }
 
-// TODO Implement this after moving to prod
-// const prod: stageVariables = {
-//
-// }
 let conf;
 switch (process.env.REACT_APP_ENV)
 {
@@ -70,7 +66,8 @@ switch (process.env.REACT_APP_ENV)
         conf = prod;
         break;
     default:
-        throw `Error, REACT_APP_ENV set to invalid value '${process.env.REACT_APP_ENV}'`
+        conf = dev;
+        console.error(`REACT_APP_ENV ${process.env.REACT_APP_ENV} not set to appropriate value, defaulting to development`)
 }
 
 console.debug("REACT_APP_ENV=", process.env.REACT_APP_ENV)

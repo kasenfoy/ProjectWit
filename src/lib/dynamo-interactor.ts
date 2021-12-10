@@ -20,8 +20,6 @@ interface CredentialData {
     sessionToken: string,
 }
 
-// TODO Refactor the non-static methods to use this.dynamo instead of DynamoInteractor.getInstance() (Test to make sure that works)
-
 class DynamoInteractor {
     private static instance: DynamoInteractor;
     private static instanceIsReadyPromise: Promise<DynamoInteractor>

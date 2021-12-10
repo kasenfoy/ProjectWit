@@ -18,14 +18,19 @@ class DateHelper
         if (typeof date === "string")
             date = new Date(date)
 
+        console.debug(this.hour(date))
+        console.debug(this.minute(date))
+        console.debug(this.second(date))
+
         return this.toStringDate(date) + " " + this.hour(date) + ":" + this.minute(date) + ":" + this.second(date);
     }
 
     /*** Private ***/
     private static zeroPad(num: number, expected: number): string
     {
+
         let str = num.toString();
-        str.padStart(expected, '0')
+        str = str.padStart(expected, '0')
         return str;
     }
 
@@ -36,7 +41,7 @@ class DateHelper
 
     private static month(date: Date): string
     {
-        return this.zeroPad(date.getMonth(), 2)
+        return this.zeroPad(date.getMonth() + 1, 2)
     }
 
     private static day(date: Date): string
