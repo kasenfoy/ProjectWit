@@ -1,11 +1,12 @@
 import { WitObject } from "../types/wit-object";
 import { DynamoInteractor } from "../dynamo-interactor";
-import {Tasks} from "../types";
-import * as Interfaces from "../interfaces";
-import {ITasks, IWitObject} from "../interfaces/types";
+import { IWitObject } from "../interfaces/types";
 
 /**
  * Abstract class to implement the Data Mapper design pattern
+ * DataMapper - and this calss in particular - is responsible for serializing
+ * data from WtiObjects to DynamoDB format, and vice versa.
+ * This depends heavily on the DynamoInteractor class.
  */
 
 enum DataMapperListActions {

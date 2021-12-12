@@ -1,5 +1,4 @@
 import React from "react";
-import {DescribeComponent} from "../describe-component";
 
 // Make the props a list of form item components to include (ID, Name, Description, etc)
 interface IdProps {

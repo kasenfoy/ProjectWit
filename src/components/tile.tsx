@@ -1,6 +1,5 @@
 import React from "react";
 import {WitObject} from "../lib/types";
-import {Id} from "./basic/id";
 import {Name} from "./basic/name";
 import TileCss from "./css/tile.module.css"
 
@@ -30,7 +29,6 @@ class Tile extends React.Component<TileProps,TileState> {
         let html =
             <div className={TileCss.Tile} onClick={this.handleClick} key={this.props.obj.data.id}>
                 <Name name={this.props.obj.data.name}/>
-                {/*<Id id={this.props.obj.data.id}/>*/}
             </div>
         return html;
     }

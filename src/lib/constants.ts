@@ -1,3 +1,10 @@
+/***
+ * This file is responsible for the web portals configuration
+ * It should be used when deploying a custom implementation
+ * of project WIT CDK infrastructure.
+ * ***/
+
+
 interface dynamoTables {
     tasks: string;
     tags: string;

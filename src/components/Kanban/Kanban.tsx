@@ -20,7 +20,6 @@ class Kanban extends React.Component<KanbanProps, KanbanState>
 
     }
 
-
     render() {
         let lanes = [];
         let statuses = [Status.NOT_STARTED, Status.IN_PROGRESS, Status.REVIEW, Status.COMPLETE]

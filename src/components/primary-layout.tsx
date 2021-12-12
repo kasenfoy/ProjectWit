@@ -2,20 +2,13 @@ import React from "react";
 import {FormHolder} from "./forms/form-holder";
 import {Tag, Tasks, Sprints, WitObject} from "../lib/types";
 import {TileList} from "./tile-list";
-import exp from "constants";
 import {LeftMenu} from "./left-menu";
-
 import PrimaryLayoutCss from "./css/primary-layout.module.css"
-import SelectSearchCss from "./css/select-search.module.css"
-import SelectSearch from "react-select-search";
-import {Kanban} from "./Kanban/Kanban";
-import {TaskEventRegistry} from "../lib/event_registries/task-event-registry";
-import {SprintEventRegistry} from "../lib/event_registries/sprint-event-registry";
-import {TagEventRegistry} from "../lib/event_registries/tag-event-registry";
+import {Kanban} from "./";
 
-// TODO Global hooks (Not necessary, props for data?) should be done here for data.
+import {TaskEventRegistry, TagEventRegistry, SprintEventRegistry} from "../lib/event_registries";
 
-// TODO Evaluate if this is the right approach (Enum?)
+// WitComponent is useful for identifying what a specific component either is, or should be holding
 enum WitComponent {
     TASKS = 'Tasks',
     TAGS = 'Tags',
@@ -30,7 +23,6 @@ interface PrimaryLayoutState {
     taskData: Tasks[],
     tagData: Tag[],
     sprintData: Sprints[]
-    // TODO Implement Users and Sprints
 }
 
 class PrimaryLayout extends React.Component<PrimaryLayoutProps, PrimaryLayoutState>
@@ -123,7 +115,6 @@ class PrimaryLayout extends React.Component<PrimaryLayoutProps, PrimaryLayoutSta
         }
     }
 
-    // Conditionally rendering the lists.
     render() {
         let html =
             <div id={"all-content"} className={PrimaryLayoutCss.PrimaryLayout}>

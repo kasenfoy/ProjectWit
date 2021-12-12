@@ -31,6 +31,7 @@ class DynamoInteractor {
 
     private constructor() {}
 
+    // This is what orchestrates the creation of our DynamoDB client
     private static async setupInstance(): Promise<DynamoInteractor>
     {
         // Create the interactor instance
@@ -50,6 +51,7 @@ class DynamoInteractor {
         return tmpInstance
     }
 
+    // Calls the AWS SDK DynamoDB creation method
     private async setDynamoDbInstance(credentials: CredentialData)
     {
         this.dynamo = new DynamoDB({
@@ -60,6 +62,9 @@ class DynamoInteractor {
         });
     }
 
+    // This sets the DynamoDB DocumentClient instance
+    // The document client is an easier way to send objects (json)
+    // to DynamoDB
     private async setDynamoDbDocumentClientInstance(credentials: CredentialData)
     {
         // Initialize the Dynamo Document Client
@@ -71,6 +76,7 @@ class DynamoInteractor {
         });
     }
 
+    // Call our Auth API endpoint specified in the constants.ts file.
     private static async retrieveCredentials(): Promise<CredentialData>
     {
         console.log('Calling API to retrieve credentials')
@@ -125,6 +131,7 @@ class DynamoInteractor {
         }
     }
 
+    // Generic insertion method
     public async insert(params: any): Promise<undefined>
     {
         console.log("insert() has been called with params", params)
@@ -142,23 +149,9 @@ class DynamoInteractor {
             console.error("insert() error: ", err, " With params:" ,  params)
             throw err
         }
-
-        // Document Client Code
-        // DynamoInteractor.getInstance().then((client: DynamoInteractor) => {
-        //     client.dynamoDocumentClient.put(params, function (err, data) {
-        //         if (err) {
-        //             console.log("Failed to insert of object with params: \n", params, err, err.stack)
-        //             // console.log(params);
-        //             // console.log(err, err.stack);
-        //         } else {
-        //             console.debug("Sucesfully inserted object with params: ", params, " And returned data: ", data)
-        //             // console.log(params);
-        //             // console.log(data);
-        //         }
-        //     });
-        // });
     }
 
+    // Generic update method
     public async update(params: any): Promise<undefined>
     {
         console.log("update() has been called with params", params)
@@ -178,6 +171,7 @@ class DynamoInteractor {
         }
     }
 
+    // generic delete method
     public async delete(params: any): Promise<undefined>
     {
         console.debug("delete() has been called with params: ", params);
@@ -198,6 +192,7 @@ class DynamoInteractor {
 
     }
 
+    // Scan is equivalent to "select *"
     public async scan(params: ScanInput): Promise<IScanOutput>
     {
         console.log("scan() has been called with params:", params)
@@ -215,23 +210,6 @@ class DynamoInteractor {
             console.error("scan() error: ", err)
             throw err
         }
-
-    //     return await DynamoInteractor.getInstance().then((client:DynamoInteractor)=>{
-    //             return client.dynamoDocumentClient.scan({
-    //                 "TableName": "tasks"
-    //             }, function (err, data) {
-    //                 if (err) {
-    //                     console.log("Failed to scan object with params: \n", params, err, err.stack)
-    //                     throw "Failed to scan"
-    //                 } else {
-    //                     console.log("Sucesfully scanned objects with params: ")
-    //                     console.log(params);
-    //                     console.log(data);
-    //                     return <ScanOutput>{Items: data.Items, Count: data.Count}
-    //                 }
-    //         }
-    //     )
-    // })
     };
 }
 
